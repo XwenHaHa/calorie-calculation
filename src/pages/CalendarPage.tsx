@@ -2,7 +2,7 @@
 import { useApp } from '../store';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
-import { formatCalories } from '../utils';
+import { formatCalories, getFoodEmoji, getExerciseEmoji } from '../utils';
 
 export function CalendarPage() {
   const { state, selectDate } = useApp();
@@ -121,7 +121,7 @@ export function CalendarPage() {
               <div key={record.id} className="glass rounded-3xl p-4 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl ${record.type === 'food' ? 'bg-orange-100' : 'bg-green-100'}`}>
-                    {record.type === 'food' ? '🍽' : '🏃'}
+                    {record.type === 'food' ? getFoodEmoji(record.title) : getExerciseEmoji(record.title)}
                   </div>
                   <div>
                     <div className="font-medium text-gray-800">{record.title}</div>

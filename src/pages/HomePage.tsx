@@ -1,7 +1,7 @@
 ﻿import { useState } from 'react';
 import { useApp } from '../store';
 import { FloatingButton } from '../components/FloatingButton';
-import { formatCalories, formatTime } from '../utils';
+import { formatCalories, formatTime, getFoodEmoji, getExerciseEmoji } from '../utils';
 import { AddRecordModal } from './AddRecordModal';
 
 export function HomePage() {
@@ -93,7 +93,7 @@ export function HomePage() {
                         record.type === 'food' ? 'bg-orange-100' : 'bg-green-100'
                       }`}
                     >
-                      {record.type === 'food' ? '?' : '?'}
+                      {record.type === 'food' ? getFoodEmoji(record.title) : getExerciseEmoji(record.title)}
                     </div>
                     <div>
                       <div className="font-medium text-gray-800">{record.title}</div>

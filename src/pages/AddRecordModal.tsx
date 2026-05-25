@@ -82,7 +82,7 @@ export function AddRecordModal({ onClose }: AddRecordModalProps) {
               mode === 'food' ? 'bg-green-500 text-white' : 'bg-white/70 text-gray-600'
             }`}
           >
-            食物
+            🍽️ 食物
           </button>
           <button
             onClick={() => setMode('exercise')}
@@ -90,7 +90,7 @@ export function AddRecordModal({ onClose }: AddRecordModalProps) {
               mode === 'exercise' ? 'bg-green-500 text-white' : 'bg-white/70 text-gray-600'
             }`}
           >
-            运动
+            🏃 运动
           </button>
         </div>
 
@@ -144,7 +144,7 @@ export function AddRecordModal({ onClose }: AddRecordModalProps) {
                     onClick={() => handleQuickFood(item.name, item.calories)}
                     className="px-4 py-2 bg-white/70 text-gray-700 rounded-2xl text-sm"
                   >
-                    {item.name} {item.calories}
+                    {item.emoji} {item.name} {item.calories}
                   </button>
                 ))
               : EXERCISE_TYPES.map(item => (
@@ -153,7 +153,7 @@ export function AddRecordModal({ onClose }: AddRecordModalProps) {
                     onClick={() => handleQuickExercise(item.name, Math.round(item.caloriesPerHour / 2))}
                     className="px-4 py-2 bg-white/70 text-gray-700 rounded-2xl text-sm"
                   >
-                    {item.name} 30分钟
+                    {item.emoji} {item.name} 30分钟
                   </button>
                 ))}
           </div>
