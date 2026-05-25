@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+﻿import type { ReactNode } from 'react';
 
 interface CardProps {
   children: ReactNode;
@@ -9,7 +9,7 @@ interface CardProps {
 export function Card({ children, className = '', onClick }: CardProps) {
   return (
     <div
-      className={`bg-white rounded-2xl shadow-sm p-4 ${className}`}
+      className={`glass rounded-[30px] p-5 ${className}`}
       onClick={onClick}
     >
       {children}
