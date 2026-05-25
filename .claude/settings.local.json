@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create *)",
+      "Bash(dir *)",
+      "Bash(cp -r ../calorie-calculation-temp/* .)",
+      "Bash(cp -r ../calorie-calculation-temp/.* .)",
+      "Bash(rm -rf ../calorie-calculation-temp)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(cat C:\\\\\\\\Users\\\\\\\\WENHAI~1\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\claude\\\\\\\\E--calorie-calculation\\\\\\\\cc2adb4f-3526-4894-bba8-2eed98f250bb\\\\\\\\tasks\\\\\\\\bf7o6rojr.output)",
+      "Bash(npx tsc *)"
+    ]
+  }
+}
