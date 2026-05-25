@@ -1,6 +1,5 @@
 ﻿import { useApp } from '../store';
 import { format } from 'date-fns';
-import { zhCN } from 'date-fns/locale';
 import { formatCalories } from '../utils';
 import ReactECharts from 'echarts-for-react';
 
@@ -107,3 +106,4 @@ export function StatsPage() {
     </div>
   );
 }
+
