@@ -46,6 +46,8 @@
 
 ## 演示
 
+**在线预览**: [http://101.96.208.101:5188/](http://101.96.208.101:5188/)
+
 <!-- ![Calmorie 演示](demo.gif) -->
 
 > **提示**: 录制一个 GIF 放在这里，推荐 [ScreenToGif](https://www.screentogif.com/) 或 [Kap](https://getkap.co/)。

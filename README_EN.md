@@ -46,6 +46,8 @@
 
 ## Demo
 
+**Live Preview**: [http://101.96.208.101:5188/](http://101.96.208.101:5188/)
+
 <!-- ![Calmorie Demo](demo.gif) -->
 
 > **Tip**: Record a GIF and place it here. Recommended tools: [ScreenToGif](https://www.screentogif.com/) or [Kap](https://getkap.co/).
