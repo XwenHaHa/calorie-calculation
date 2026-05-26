@@ -53,7 +53,7 @@ export function BottomNav() {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 flex justify-center pb-6">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 flex justify-center" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}>
       <div className="glass rounded-[34px] px-4 py-3 flex items-center gap-1">
         {navItems.map(item => {
           const isActive = location.pathname === item.path;

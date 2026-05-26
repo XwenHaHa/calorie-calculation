@@ -55,3 +55,21 @@ body {
   opacity: 0.45;
   pointer-events: none;
 }
+
+/* Capacitor: Safe area support for iOS notch and home indicator */
+@supports (padding: env(safe-area-inset-top)) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+html, body {
+  height: 100%;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  overscroll-behavior-y: none;
+}
