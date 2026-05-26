@@ -1,0 +1,12 @@
+{
+  "aiCoach": "AI Coach",
+  "lifestyleAdvice": "Lifestyle-based advice",
+  "analyzing": "Analyzing...",
+  "regenerate": "Regenerate Advice",
+  "generate": "Generate AI Advice",
+  "aiAnalyzing": "AI is analyzing your data...",
+  "basedOnDate": "Based on {{date}} data",
+  "tapAbove": "Tap the button above",
+  "aiDescription": "AI will analyze your diet and exercise data to provide personalized advice",
+  "generateFailed": "Failed to generate advice, please try again"
+}

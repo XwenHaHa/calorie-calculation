@@ -1,0 +1,9 @@
+{
+  "systemPrompt": "You are a health management assistant. Give advice in concise, everyday language.",
+  "userPrompt": "You are a health management assistant. Based on the following user's diet and exercise data, provide 3 short health tips.\n\nAnalysis date: {{date}}\n\nDaily data ({{date}}):\n- Calories consumed: {{dailyIntake}} kcal\n- Calories burned: {{dailyBurn}} kcal\n- Net calories: {{dailyNet}} kcal\n\nMonthly data:\n- Total intake: {{monthlyIntake}} kcal\n- Total burn: {{monthlyBurn}} kcal\n- Avg daily net calories: {{avgNet}} kcal\n\nLast 7 days records:\n- Diet records: {{foodCount}}\n- Exercise records: {{exerciseCount}}\n\nRequirements:\n1. Each tip should be under 20 words\n2. Use everyday language, no medical jargon\n3. Give targeted advice based on actual data\n4. If data is insufficient, give general health tips\n5. Return exactly 3 tips separated by newlines, no numbering or formatting",
+  "defaultAdvice_highSurplus": "Monthly calorie surplus is high, watch your diet",
+  "defaultAdvice_noExercise": "No exercise today, consider some activity",
+  "defaultAdvice_good1": "Keep up the good lifestyle habits",
+  "defaultAdvice_good2": "Balanced diet, moderate exercise",
+  "defaultAdvice_good3": "Stay hydrated throughout the day"
+}

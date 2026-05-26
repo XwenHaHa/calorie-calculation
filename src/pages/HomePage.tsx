@@ -1,25 +1,28 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApp } from '../store';
 import { FloatingButton } from '../components/FloatingButton';
-import { formatCalories, formatTime, getFoodEmoji, getExerciseEmoji } from '../utils';
+import { formatCalories, formatTime, getFoodEmoji, getExerciseEmoji, getDisplayTitle } from '../utils';
 import { AddRecordModal } from './AddRecordModal';
 
 export function HomePage() {
   const { state, removeRecord } = useApp();
   const [showAddModal, setShowAddModal] = useState(false);
   const { dailySummary, recentRecords } = state;
+  const { t } = useTranslation(['home', 'common']);
 
   const today = new Date();
-  const monthNames = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+  const monthNames = t('monthNames', { ns: 'home', returnObjects: true }) as string[];
+  const daySuffix = t('daySuffix', { ns: 'home' });
 
   return (
     <div className="pb-24">
       <div className="px-6 pt-16">
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-sm text-gray-400">今天</div>
+            <div className="text-sm text-gray-400">{t('today', { ns: 'common' })}</div>
             <div className="text-3xl font-semibold text-gray-800 mt-1">
-              {monthNames[today.getMonth()]} {today.getDate()}日
+              {monthNames[today.getMonth()]} {today.getDate()}{daySuffix}
             </div>
           </div>
           <div className="glass w-12 h-12 rounded-2xl flex items-center justify-center">
@@ -30,22 +33,22 @@ export function HomePage() {
         </div>
 
         <div className="glass rounded-[36px] p-7 mt-8">
-          <div className="text-sm text-gray-400">净热量</div>
+          <div className="text-sm text-gray-400">{t('netCalories', { ns: 'common' })}</div>
           <div className="mt-3 flex items-end gap-2">
             <div className="text-6xl font-bold tracking-tight text-gray-900">
               {formatCalories(Math.abs(dailySummary.netCalories))}
             </div>
-            <div className="text-lg text-green-600 mb-2">千卡</div>
+            <div className="text-lg text-green-600 mb-2">{t('kcal', { ns: 'common' })}</div>
           </div>
           <div className="mt-6 grid grid-cols-2 gap-4">
             <div className="bg-white/60 rounded-3xl p-4">
-              <div className="text-xs text-gray-400">摄入</div>
+              <div className="text-xs text-gray-400">{t('intake', { ns: 'common' })}</div>
               <div className="mt-2 text-2xl font-semibold text-gray-800">
                 {formatCalories(dailySummary.totalIntake)}
               </div>
             </div>
             <div className="bg-white/60 rounded-3xl p-4">
-              <div className="text-xs text-gray-400">消耗</div>
+              <div className="text-xs text-gray-400">{t('burn', { ns: 'common' })}</div>
               <div className="mt-2 text-2xl font-semibold text-orange-500">
                 -{formatCalories(Math.abs(dailySummary.totalBurn))}
               </div>
@@ -61,9 +64,9 @@ export function HomePage() {
               </svg>
             </div>
             <div>
-              <div className="font-medium text-gray-800">AI 洞察</div>
+              <div className="font-medium text-gray-800">{t('aiInsight', { ns: 'home' })}</div>
               <div className="text-sm text-gray-400">
-                {dailySummary.netCalories > 0 ? '今日略有热量盈余' : dailySummary.netCalories < 0 ? '今日热量缺口良好' : '今日热量完美平衡'}
+                {dailySummary.netCalories > 0 ? t('slightSurplus', { ns: 'home' }) : dailySummary.netCalories < 0 ? t('goodDeficit', { ns: 'home' }) : t('perfectBalance', { ns: 'home' })}
               </div>
             </div>
           </div>
@@ -71,15 +74,15 @@ export function HomePage() {
 
         <div className="mt-7">
           <div className="flex items-center justify-between">
-            <div className="text-lg font-semibold text-gray-800">最近记录</div>
-            <div className="text-sm text-green-600">查看全部</div>
+            <div className="text-lg font-semibold text-gray-800">{t('recentRecords', { ns: 'home' })}</div>
+            <div className="text-sm text-green-600">{t('viewAll', { ns: 'home' })}</div>
           </div>
           <div className="space-y-4 mt-4">
             {recentRecords.length === 0 ? (
               <div className="glass rounded-3xl p-8 text-center">
                 <div className="text-4xl mb-3">🌿</div>
-                <p className="text-gray-400">暂无记录</p>
-                <p className="text-gray-400 text-sm mt-1">点击下方按钮开始记录</p>
+                <p className="text-gray-400">{t('noRecords', { ns: 'common' })}</p>
+                <p className="text-gray-400 text-sm mt-1">{t('startRecordingHint', { ns: 'common' })}</p>
               </div>
             ) : (
               recentRecords.map(record => (
@@ -96,9 +99,9 @@ export function HomePage() {
                       {record.type === 'food' ? getFoodEmoji(record.title) : getExerciseEmoji(record.title)}
                     </div>
                     <div>
-                      <div className="font-medium text-gray-800">{record.title}</div>
+                      <div className="font-medium text-gray-800">{getDisplayTitle(record.title, t)}</div>
                       <div className="text-sm text-gray-400">
-                        {record.type === 'food' ? '食物' : '运动'}  {formatTime(record.date)}
+                        {record.type === 'food' ? t('food', { ns: 'common' }) : t('exercise', { ns: 'common' })}  {formatTime(record.date)}
                       </div>
                     </div>
                   </div>

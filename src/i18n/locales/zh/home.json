@@ -1,0 +1,10 @@
+{
+  "monthNames": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+  "daySuffix": "日",
+  "aiInsight": "AI 洞察",
+  "slightSurplus": "今日略有热量盈余",
+  "goodDeficit": "今日热量缺口良好",
+  "perfectBalance": "今日热量完美平衡",
+  "recentRecords": "最近记录",
+  "viewAll": "查看全部"
+}

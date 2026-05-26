@@ -1,17 +1,21 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApp } from '../store';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday } from 'date-fns';
-import { zhCN } from 'date-fns/locale';
-import { formatCalories, getFoodEmoji, getExerciseEmoji } from '../utils';
+import { zhCN, enUS } from 'date-fns/locale';
+import { formatCalories, getFoodEmoji, getExerciseEmoji, getDisplayTitle } from '../utils';
 
 export function CalendarPage() {
   const { state, selectDate } = useApp();
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const { t, i18n } = useTranslation(['calendar', 'common']);
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
   const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
   const firstDayOfMonth = monthStart.getDay();
+
+  const dateLocale = i18n.language === 'zh' ? zhCN : enUS;
 
   const prevMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
@@ -21,13 +25,15 @@ export function CalendarPage() {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
   };
 
+  const weekdays = t('weekdays', { returnObjects: true }) as string[];
+
   return (
     <div className="pb-24 px-6 pt-16">
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-sm text-gray-400">月度概览</div>
+          <div className="text-sm text-gray-400">{t('monthOverview', { ns: 'common' })}</div>
           <div className="text-3xl font-semibold text-gray-900 mt-1">
-            {format(currentMonth, 'yyyy年 M月')}
+            {format(currentMonth, t('yearMonthFormat'), { locale: dateLocale })}
           </div>
         </div>
         <div className="glass w-12 h-12 rounded-2xl flex items-center justify-center">
@@ -45,7 +51,7 @@ export function CalendarPage() {
             </svg>
           </button>
           <h2 className="text-lg font-semibold text-gray-800">
-            {format(currentMonth, 'yyyy年 M月', { locale: zhCN })}
+            {format(currentMonth, t('yearMonthFormat'), { locale: dateLocale })}
           </h2>
           <button onClick={nextMonth} className="glass w-10 h-10 rounded-2xl flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -55,7 +61,7 @@ export function CalendarPage() {
         </div>
 
         <div className="grid grid-cols-7 gap-3 text-center text-sm text-gray-400 mb-3">
-          {['一', '二', '三', '四', '五', '六', '日'].map(d => (
+          {weekdays.map(d => (
             <div key={d}>{d}</div>
           ))}
         </div>
@@ -88,19 +94,19 @@ export function CalendarPage() {
 
       <div className="grid grid-cols-3 gap-4 mt-6">
         <div className="glass rounded-3xl p-4 text-center">
-          <div className="text-xs text-gray-400">摄入</div>
+          <div className="text-xs text-gray-400">{t('intake', { ns: 'common' })}</div>
           <div className="mt-2 text-xl font-semibold text-gray-800">
             {formatCalories(state.monthlyStats.totalIntake)}
           </div>
         </div>
         <div className="glass rounded-3xl p-4 text-center">
-          <div className="text-xs text-gray-400">消耗</div>
+          <div className="text-xs text-gray-400">{t('burn', { ns: 'common' })}</div>
           <div className="mt-2 text-xl font-semibold text-orange-500">
             -{formatCalories(Math.abs(state.monthlyStats.totalBurn))}
           </div>
         </div>
         <div className="glass rounded-3xl p-4 text-center">
-          <div className="text-xs text-gray-400">净热量</div>
+          <div className="text-xs text-gray-400">{t('netCalories', { ns: 'common' })}</div>
           <div className="mt-2 text-xl font-semibold text-green-600">
             {formatCalories(state.monthlyStats.totalIntake - Math.abs(state.monthlyStats.totalBurn))}
           </div>
@@ -109,11 +115,11 @@ export function CalendarPage() {
 
       <div className="mt-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-3">
-          {format(state.selectedDate, 'M月dd日', { locale: zhCN })} 记录
+          {format(state.selectedDate, t('dateFormat'), { locale: dateLocale })} {t('recordLabel')}
         </h3>
         {state.recentRecords.length === 0 ? (
           <div className="glass rounded-3xl p-8 text-center">
-            <p className="text-gray-400">暂无记录</p>
+            <p className="text-gray-400">{t('noRecords', { ns: 'common' })}</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -124,8 +130,8 @@ export function CalendarPage() {
                     {record.type === 'food' ? getFoodEmoji(record.title) : getExerciseEmoji(record.title)}
                   </div>
                   <div>
-                    <div className="font-medium text-gray-800">{record.title}</div>
-                    <div className="text-sm text-gray-400">{record.type === 'food' ? '食物' : '运动'}</div>
+                    <div className="font-medium text-gray-800">{getDisplayTitle(record.title, t)}</div>
+                    <div className="text-sm text-gray-400">{record.type === 'food' ? t('food', { ns: 'common' }) : t('exercise', { ns: 'common' })}</div>
                   </div>
                 </div>
                 <span className={`font-semibold ${record.type === 'food' ? 'text-gray-800' : 'text-orange-500'}`}>

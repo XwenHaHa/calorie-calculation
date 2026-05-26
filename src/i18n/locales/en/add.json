@@ -1,0 +1,8 @@
+{
+  "quickAdd": "Quick Add",
+  "quickAddHint": "5-second quick log",
+  "foodPlaceholder": "e.g.: Fried chicken 520",
+  "exercisePlaceholder": "e.g.: Running -300",
+  "saveRecord": "Save Record",
+  "quickSelect": "Quick Select {{type}}"
+}

@@ -1,0 +1,6 @@
+{
+  "yearMonthFormat": "MMMM yyyy",
+  "weekdays": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  "dateFormat": "MMM dd",
+  "recordLabel": "Records"
+}

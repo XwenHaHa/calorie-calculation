@@ -1,0 +1,12 @@
+{
+  "monthlyTrend": "月度趋势",
+  "monthlySurplus": "本月盈余",
+  "monthlyDeficit": "本月缺口",
+  "monthlyStable": "本月稳定",
+  "dailyNetCalories": "每日净热量",
+  "noData": "暂无数据",
+  "avgIntake": "日均摄入",
+  "avgBurn": "日均消耗",
+  "totalIntake": "总摄入",
+  "totalBurn": "总消耗"
+}

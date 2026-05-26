@@ -1,0 +1,10 @@
+{
+  "monthNames": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  "daySuffix": "",
+  "aiInsight": "AI Insights",
+  "slightSurplus": "Slight calorie surplus today",
+  "goodDeficit": "Good calorie deficit today",
+  "perfectBalance": "Perfect calorie balance today",
+  "recentRecords": "Recent Records",
+  "viewAll": "View All"
+}

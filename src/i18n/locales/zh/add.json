@@ -1,0 +1,8 @@
+{
+  "quickAdd": "快速添加",
+  "quickAddHint": "5秒快速记录",
+  "foodPlaceholder": "例如：炸鸡 520",
+  "exercisePlaceholder": "例如：跑步 -300",
+  "saveRecord": "保存记录",
+  "quickSelect": "快速选择 {{type}}"
+}

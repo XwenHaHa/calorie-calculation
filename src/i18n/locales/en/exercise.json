@@ -1,0 +1,18 @@
+{
+  "running": "Running",
+  "cycling": "Cycling",
+  "swimming": "Swimming",
+  "walking": "Walking",
+  "yoga": "Yoga",
+  "gym": "Gym",
+  "jump_rope": "Jump Rope",
+  "basketball": "Basketball",
+  "football": "Football",
+  "badminton": "Badminton",
+  "table_tennis": "Table Tennis",
+  "tennis": "Tennis",
+  "volleyball": "Volleyball",
+  "hiking": "Hiking",
+  "dancing": "Dancing",
+  "tai_chi": "Tai Chi"
+}

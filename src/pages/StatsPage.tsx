@@ -1,4 +1,5 @@
-﻿import { useApp } from '../store';
+import { useTranslation } from 'react-i18next';
+import { useApp } from '../store';
 import { format } from 'date-fns';
 import { formatCalories } from '../utils';
 import ReactECharts from 'echarts-for-react';
@@ -6,13 +7,14 @@ import ReactECharts from 'echarts-for-react';
 export function StatsPage() {
   const { state } = useApp();
   const { monthlyStats } = state;
+  const { t } = useTranslation(['stats', 'common']);
 
   const chartOption = {
     tooltip: {
       trigger: 'axis' as const,
       formatter: (params: { name: string; value: number }[]) => {
         const data = params[0];
-        return `${data.name}<br/>净热量: ${data.value} 千卡`;
+        return `${data.name}<br/>${t('netCalories', { ns: 'common' })}: ${data.value} ${t('kcal', { ns: 'common' })}`;
       },
     },
     xAxis: {
@@ -55,34 +57,34 @@ export function StatsPage() {
 
   return (
     <div className="pb-24 px-6 pt-16">
-      <div className="text-sm text-gray-400">月度趋势</div>
+      <div className="text-sm text-gray-400">{t('monthlyTrend')}</div>
       <div className="text-4xl font-semibold text-gray-900 mt-2">
         {formatCalories(netCalories)}
       </div>
       <div className="text-green-600 mt-2">
-        {netCalories > 0 ? '本月盈余' : netCalories < 0 ? '本月缺口' : '本月稳定'}
+        {netCalories > 0 ? t('monthlySurplus') : netCalories < 0 ? t('monthlyDeficit') : t('monthlyStable')}
       </div>
 
       <div className="glass rounded-[38px] p-6 mt-8">
-        <h3 className="text-sm text-gray-400 mb-2">每日净热量</h3>
+        <h3 className="text-sm text-gray-400 mb-2">{t('dailyNetCalories')}</h3>
         {monthlyStats.dailyTrend.length > 0 ? (
           <ReactECharts option={chartOption} style={{ height: 280 }} />
         ) : (
           <div className="flex items-center justify-center h-52">
-            <p className="text-gray-400">暂无数据</p>
+            <p className="text-gray-400">{t('noData')}</p>
           </div>
         )}
       </div>
 
       <div className="grid grid-cols-2 gap-4 mt-6">
         <div className="glass rounded-3xl p-5">
-          <div className="text-sm text-gray-400">日均摄入</div>
+          <div className="text-sm text-gray-400">{t('avgIntake')}</div>
           <div className="mt-2 text-2xl font-semibold text-gray-800">
             {formatCalories(monthlyStats.totalIntake > 0 ? Math.round(monthlyStats.totalIntake / Math.max(monthlyStats.dailyTrend.length, 1)) : 0)}
           </div>
         </div>
         <div className="glass rounded-3xl p-5">
-          <div className="text-sm text-gray-400">日均消耗</div>
+          <div className="text-sm text-gray-400">{t('avgBurn')}</div>
           <div className="mt-2 text-2xl font-semibold text-orange-500">
             -{formatCalories(monthlyStats.totalBurn !== 0 ? Math.round(Math.abs(monthlyStats.totalBurn) / Math.max(monthlyStats.dailyTrend.length, 1)) : 0)}
           </div>
@@ -91,13 +93,13 @@ export function StatsPage() {
 
       <div className="grid grid-cols-2 gap-4 mt-4">
         <div className="glass rounded-3xl p-5">
-          <div className="text-sm text-gray-400">总摄入</div>
+          <div className="text-sm text-gray-400">{t('totalIntake')}</div>
           <div className="mt-2 text-2xl font-semibold text-gray-800">
             {formatCalories(monthlyStats.totalIntake)}
           </div>
         </div>
         <div className="glass rounded-3xl p-5">
-          <div className="text-sm text-gray-400">总消耗</div>
+          <div className="text-sm text-gray-400">{t('totalBurn')}</div>
           <div className="mt-2 text-2xl font-semibold text-orange-500">
             -{formatCalories(Math.abs(monthlyStats.totalBurn))}
           </div>
@@ -106,4 +108,3 @@ export function StatsPage() {
     </div>
   );
 }
-

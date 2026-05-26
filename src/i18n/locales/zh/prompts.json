@@ -1,0 +1,9 @@
+{
+  "systemPrompt": "你是一个健康管理助手，用简洁的生活化语言给出建议。",
+  "userPrompt": "你是一个健康管理助手。请根据以下用户的饮食和运动数据，给出3条简短的健康建议。\n\n分析日期：{{date}}\n\n当日数据（{{date}}）：\n- 摄入热量：{{dailyIntake}} 卡\n- 消耗热量：{{dailyBurn}} 卡\n- 净热量：{{dailyNet}} 卡\n\n本月数据：\n- 总摄入：{{monthlyIntake}} 卡\n- 总消耗：{{monthlyBurn}} 卡\n- 日均净热量：{{avgNet}} 卡\n\n最近7天记录：\n- 饮食记录 {{foodCount}} 条\n- 运动记录 {{exerciseCount}} 条\n\n要求：\n1. 每条建议不超过20字\n2. 使用生活化表达，不要医疗术语\n3. 根据数据实际情况给出针对性建议\n4. 如果数据不足，给出通用健康建议\n5. 直接返回3条建议，用换行分隔，不要添加序号或其他格式",
+  "defaultAdvice_highSurplus": "本月热量盈余较高，注意控制饮食",
+  "defaultAdvice_noExercise": "今天还没运动，建议适量活动",
+  "defaultAdvice_good1": "继续保持良好的生活习惯",
+  "defaultAdvice_good2": "均衡饮食，适量运动",
+  "defaultAdvice_good3": "每天保持充足的水分摄入"
+}

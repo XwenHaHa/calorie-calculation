@@ -1,0 +1,12 @@
+{
+  "monthlyTrend": "Monthly Trend",
+  "monthlySurplus": "Monthly Surplus",
+  "monthlyDeficit": "Monthly Deficit",
+  "monthlyStable": "Monthly Stable",
+  "dailyNetCalories": "Daily Net Calories",
+  "noData": "No data yet",
+  "avgIntake": "Avg Daily Intake",
+  "avgBurn": "Avg Daily Burn",
+  "totalIntake": "Total Intake",
+  "totalBurn": "Total Burn"
+}
