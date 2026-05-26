@@ -13,6 +13,7 @@
   <img src="https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript" alt="TypeScript 6" />
   <img src="https://img.shields.io/badge/Vite-8-646CFF?logo=vite" alt="Vite 8" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss" alt="Tailwind CSS 4" />
+  <img src="https://img.shields.io/badge/Capacitor-8-119EFF?logo=capacitor" alt="Capacitor 8" />
   <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT License" />
 </p>
 
@@ -21,6 +22,7 @@
   <a href="#快速开始">快速开始</a> ·
   <a href="#功能特性">功能特性</a> ·
   <a href="#技术栈">技术栈</a> ·
+  <a href="#原生构建">原生构建</a> ·
   <a href="#贡献指南">贡献指南</a>
 </p>
 
@@ -43,6 +45,11 @@
 - 移动端优先，支持单手操作
 - 数据本地存储，无需登录
 - 支持中英文双语切换
+
+### 平台支持
+- **H5 Web** - 浏览器直接访问
+- **Android** - 通过 Capacitor 打包为原生 APK/AAB
+- **iOS** - 通过 Capacitor 打包为原生 IPA（需 macOS）
 
 ## 演示
 
@@ -92,6 +99,19 @@ npm run preview
 npm run lint
 ```
 
+### 原生构建
+
+```bash
+# Android（需要安装 Android Studio）
+npm run cap:android
+
+# iOS（需要 macOS + Xcode）
+npm run cap:ios
+
+# 仅同步 Web 资源到原生工程
+npm run cap:sync
+```
+
 ## 技术栈
 
 | 技术 | 用途 |
@@ -105,33 +125,39 @@ npm run lint
 | **ECharts** | 图表展示 |
 | **LocalStorage** | 数据持久化 |
 | **i18next** | 国际化（中/英文） |
+| **Capacitor** | 跨平台原生打包（iOS / Android） |
 | **OpenAI 兼容 API** | AI 能力 |
 
 ## 项目结构
 
 ```
-src/
-├── components/       # 通用组件
-│   ├── BottomNav.tsx
-│   ├── Card.tsx
-│   └── FloatingButton.tsx
-├── pages/            # 页面组件
-│   ├── HomePage.tsx
-│   ├── CalendarPage.tsx
-│   ├── StatsPage.tsx
-│   ├── AIPage.tsx
-│   └── AddRecordModal.tsx
-├── i18n/             # 国际化配置及语言包
-│   ├── index.ts
-│   └── locales/      # zh / en 语言资源
-├── store/            # 状态管理 (Context + useReducer)
-├── services/         # 服务层
-│   ├── storage.ts
-│   └── ai.ts
-├── utils/            # 工具函数
-├── types/            # TypeScript 类型定义
-├── constants/        # 常量定义
-└── assets/           # 静态资源
+calorie-calculation/
+├── capacitor.config.ts   # Capacitor 配置（启动屏、状态栏等）
+├── android/              # Android 原生工程（由 Capacitor 生成）
+├── ios/                  # iOS 原生工程（由 Capacitor 生成）
+├── src/
+│   ├── components/       # 通用组件
+│   │   ├── BottomNav.tsx
+│   │   ├── Card.tsx
+│   │   └── FloatingButton.tsx
+│   ├── pages/            # 页面组件
+│   │   ├── HomePage.tsx
+│   │   ├── CalendarPage.tsx
+│   │   ├── StatsPage.tsx
+│   │   ├── AIPage.tsx
+│   │   └── AddRecordModal.tsx
+│   ├── i18n/             # 国际化配置及语言包
+│   │   ├── index.ts
+│   │   └── locales/      # zh / en 语言资源
+│   ├── store/            # 状态管理 (Context + useReducer)
+│   ├── services/         # 服务层
+│   │   ├── storage.ts
+│   │   ├── ai.ts
+│   │   └── capacitor.ts  # Capacitor 原生功能初始化
+│   ├── utils/            # 工具函数
+│   ├── types/            # TypeScript 类型定义
+│   ├── constants/        # 常量定义
+│   └── assets/           # 静态资源
 ```
 
 ## 使用说明
