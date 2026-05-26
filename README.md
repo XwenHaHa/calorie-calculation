@@ -42,6 +42,7 @@
 - 常用食物和运动快捷选择
 - 移动端优先，支持单手操作
 - 数据本地存储，无需登录
+- 支持中英文双语切换
 
 ## 演示
 
@@ -60,7 +61,7 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/your-username/calorie-calculation.git
+git clone https://github.com/XwenHaHa/calorie-calculation.git
 cd calorie-calculation
 
 # 安装依赖
@@ -101,6 +102,7 @@ npm run lint
 | **date-fns** | 日期处理 |
 | **ECharts** | 图表展示 |
 | **LocalStorage** | 数据持久化 |
+| **i18next** | 国际化（中/英文） |
 | **OpenAI 兼容 API** | AI 能力 |
 
 ## 项目结构
@@ -117,7 +119,9 @@ src/
 │   ├── StatsPage.tsx
 │   ├── AIPage.tsx
 │   └── AddRecordModal.tsx
-├── hooks/            # 自定义 Hooks
+├── i18n/             # 国际化配置及语言包
+│   ├── index.ts
+│   └── locales/      # zh / en 语言资源
 ├── store/            # 状态管理 (Context + useReducer)
 ├── services/         # 服务层
 │   ├── storage.ts

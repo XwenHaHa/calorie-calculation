@@ -42,6 +42,7 @@
 - Quick-select for common foods & exercises
 - Mobile-first, single-hand friendly
 - Local storage, no login required
+- Bilingual support (Chinese / English)
 
 ## Demo
 
@@ -60,7 +61,7 @@
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/calorie-calculation.git
+git clone https://github.com/XwenHaHa/calorie-calculation.git
 cd calorie-calculation
 
 # Install dependencies
@@ -101,6 +102,7 @@ npm run lint
 | **date-fns** | Date utilities |
 | **ECharts** | Charts |
 | **LocalStorage** | Data persistence |
+| **i18next** | Internationalization (zh / en) |
 | **OpenAI-compatible API** | AI capabilities |
 
 ## Project Structure
@@ -117,7 +119,9 @@ src/
 │   ├── StatsPage.tsx
 │   ├── AIPage.tsx
 │   └── AddRecordModal.tsx
-├── hooks/            # Custom hooks
+├── i18n/             # i18n config & locale files
+│   ├── index.ts
+│   └── locales/      # zh / en language resources
 ├── store/            # State (Context + useReducer)
 ├── services/         # Services
 │   ├── storage.ts
