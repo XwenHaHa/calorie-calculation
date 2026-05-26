@@ -74,7 +74,7 @@ cp .env.example .env
 npm run dev
 ```
 
-Visit http://localhost:5173 to view the app.
+Visit http://101.96.208.101:5188 to view the app.
 
 ### Build
 
