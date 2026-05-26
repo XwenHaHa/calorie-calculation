@@ -75,7 +75,7 @@ cp .env.example .env
 npm run dev
 ```
 
-访问 http://101.96.208.101:5188 查看应用。
+访问 http://localhost:5173 查看应用。
 
 ### 构建生产版本
 
