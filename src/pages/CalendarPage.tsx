@@ -28,7 +28,7 @@ export function CalendarPage() {
   const weekdays = t('weekdays', { returnObjects: true }) as string[];
 
   return (
-    <div className="pb-24 px-6 pt-16">
+    <div className="pb-40 px-6 pt-16">
       <div className="flex items-center justify-between">
         <div>
           <div className="text-sm text-gray-400">{t('monthOverview', { ns: 'common' })}</div>

@@ -8,6 +8,7 @@ import { AddRecordModal } from './AddRecordModal';
 export function HomePage() {
   const { state, removeRecord } = useApp();
   const [showAddModal, setShowAddModal] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState<{ id: string; title: string } | null>(null);
   const { dailySummary, recentRecords } = state;
   const { t } = useTranslation(['home', 'common']);
 
@@ -16,7 +17,7 @@ export function HomePage() {
   const daySuffix = t('daySuffix', { ns: 'home' });
 
   return (
-    <div className="pb-24">
+    <div className="pb-40">
       <div className="px-6 pt-16">
         <div className="flex items-center justify-between">
           <div>
@@ -115,7 +116,7 @@ export function HomePage() {
                       {formatCalories(Math.abs(record.calories))}
                     </div>
                     <button
-                      onClick={() => removeRecord(record.id)}
+                      onClick={() => setDeleteConfirm({ id: record.id, title: getDisplayTitle(record.title, t) })}
                       className="text-gray-400 hover:text-red-500 p-1"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -132,6 +133,40 @@ export function HomePage() {
 
       <FloatingButton onClick={() => setShowAddModal(true)} />
       {showAddModal && <AddRecordModal onClose={() => setShowAddModal(false)} />}
+
+      {deleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6" onClick={() => setDeleteConfirm(null)}>
+          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
+          <div className="glass rounded-[32px] p-6 w-full max-w-xs relative z-10 animate-slide-up" onClick={e => e.stopPropagation()}>
+            <div className="text-center">
+              <div className="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">{t('confirmDelete', { ns: 'common' })}</h3>
+              <p className="text-sm text-gray-500 mb-6">{t('deleteRecordHint', { ns: 'common', name: deleteConfirm.title })}</p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setDeleteConfirm(null)}
+                  className="flex-1 h-12 rounded-2xl glass text-gray-700 font-medium"
+                >
+                  {t('cancel', { ns: 'common' })}
+                </button>
+                <button
+                  onClick={() => {
+                    removeRecord(deleteConfirm.id);
+                    setDeleteConfirm(null);
+                  }}
+                  className="flex-1 h-12 rounded-2xl bg-red-500 text-white font-medium"
+                >
+                  {t('delete', { ns: 'common' })}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

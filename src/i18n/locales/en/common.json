@@ -20,5 +20,9 @@
   "home": "Home",
   "calendar": "Calendar",
   "trends": "Trends",
-  "ai": "AI"
+  "ai": "AI",
+  "confirmDelete": "Confirm Delete",
+  "deleteRecordHint": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+  "cancel": "Cancel",
+  "delete": "Delete"
 }

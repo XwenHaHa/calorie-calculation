@@ -56,7 +56,7 @@ export function StatsPage() {
   const netCalories = monthlyStats.totalIntake - Math.abs(monthlyStats.totalBurn);
 
   return (
-    <div className="pb-24 px-6 pt-16">
+    <div className="pb-40 px-6 pt-16">
       <div className="text-sm text-gray-400">{t('monthlyTrend')}</div>
       <div className="text-4xl font-semibold text-gray-900 mt-2">
         {formatCalories(netCalories)}

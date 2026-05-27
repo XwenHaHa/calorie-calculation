@@ -36,7 +36,7 @@ export function AIPage() {
   }, [state.records, state.dailySummary, state.monthlyStats, state.selectedDate, t]);
 
   return (
-    <div className="pb-24 px-6 pt-16">
+    <div className="pb-40 px-6 pt-16">
       <div className="flex items-center gap-4">
         <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-green-200 to-green-100 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
