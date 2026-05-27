@@ -52,7 +52,7 @@ i18n
     },
     fallbackLng: 'zh',
     supportedLngs: ['zh', 'en'],
-    ns: ['common'],
+    ns: ['common', 'food', 'exercise'],
     defaultNS: 'common',
     detection: {
       order: ['localStorage', 'navigator'],

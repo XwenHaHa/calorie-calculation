@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmorie - 想说的话</title>
+  <link rel="stylesheet" href="poster.css">
+  <style>
+    .thought-card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+    .thought-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .thought-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .thought-text {
+      font-size: 0.85rem;
+      color: #4b5563;
+      line-height: 1.7;
+    }
+    .thought-text strong {
+      color: #22c55e;
+    }
+    .closing-card {
+      background: linear-gradient(135deg, #dcfce7, #f0fdf4);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      margin-top: 16px;
+    }
+    .closing-quote {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #16a34a;
+      line-height: 1.6;
+    }
+    .closing-sub {
+      font-size: 0.85rem;
+      color: #4b5563;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="poster">
+    <div class="poster-header">
+      <div class="poster-number">10</div>
+      <h1 class="poster-title">想说的话</h1>
+      <p class="poster-subtitle">关于这个产品的一些想法</p>
+    </div>
+
+    <div class="poster-content">
+      <div class="thought-card">
+        <div class="thought-title">
+          <div class="thought-icon" style="background: #fef3c7;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          </div>
+          为什么做这个产品
+        </div>
+        <div class="thought-text">
+          市面上的卡路里记录 APP 大多需要注册、有广告、界面复杂。<br><br>
+          我想做一个<strong>打开就能用、干净无广告、简单直接</strong>的工具，让记录热量这件事变得轻松，而不是负担。
+        </div>
+      </div>
+
+      <div class="thought-card">
+        <div class="thought-title">
+          <div class="thought-icon" style="background: #dcfce7;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0110 0v4"></path></svg>
+          </div>
+          为什么数据存在本地
+        </div>
+        <div class="thought-text">
+          健康数据是很私密的信息。我不希望用户的饮食记录被上传到某个服务器上。<br><br>
+          <strong>你的数据只属于你</strong>，存在你的手机里，任何时候都可以清除。
+        </div>
+      </div>
+
+      <div class="thought-card">
+        <div class="thought-title">
+          <div class="thought-icon" style="background: #dbeafe;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          为什么设计这么简洁
+        </div>
+        <div class="thought-text">
+          好的工具应该让人专注于目标本身，而不是工具的使用。<br><br>
+          记录热量是为了更健康，<strong>不应该让记录本身变成一种压力</strong>。
+        </div>
+      </div>
+
+      <div class="thought-card">
+        <div class="thought-title">
+          <div class="thought-icon" style="background: #ede9fe;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+          </div>
+          关于功能完善
+        </div>
+        <div class="thought-text">
+          说实话，现在的功能还不够完美，食物数据库还不够丰富，一些细节体验也有提升空间。<br><br>
+          但<strong>好的产品是迭代出来的</strong>。我会根据大家的使用反馈，持续改进、逐步完善。
+        </div>
+      </div>
+
+      <div class="thought-card">
+        <div class="thought-title">
+          <div class="thought-icon" style="background: #fce7f3;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"></path></svg>
+          </div>
+          期待你的建议
+        </div>
+        <div class="thought-text">
+          如果你在使用过程中有任何想法、建议、或者发现了什么问题，都欢迎告诉我。<br><br>
+          <strong>你的每一条反馈，都会让这个产品变得更好</strong>。
+        </div>
+      </div>
+
+      <div class="closing-card">
+        <div class="closing-quote">
+          希望这个小工具<br>能帮到正在关注健康的你
+        </div>
+        <div class="closing-sub">
+          代码是工具，解决问题才是目的<br>
+          <strong style="color: #22c55e; font-size: 0.9rem;">感谢你的使用和支持</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="poster-footer">
+      <div class="footer-logo">
+        <div class="icon">C</div>
+        <span>Calmorie</span>
+      </div>
+      <span class="footer-tag">用心做好一件事</span>
+    </div>
+  </div>
+</body>
+</html>

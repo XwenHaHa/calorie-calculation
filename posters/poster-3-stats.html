@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmorie - 月度趋势</title>
+  <link rel="stylesheet" href="poster.css">
+</head>
+<body>
+  <div class="poster">
+    <div class="poster-header">
+      <div class="poster-number">03</div>
+      <h1 class="poster-title">月度趋势</h1>
+      <p class="poster-subtitle">图表展示热量变化，掌握长期规律</p>
+    </div>
+
+    <div class="poster-content">
+      <!-- 截图区域 -->
+      <div class="screenshot-container">
+        <div class="screenshot-frame">
+          <img src="screenshots/stats.png" alt="趋势截图"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="screenshot-placeholder" style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+            </svg>
+            <div>请截图替换</div>
+            <div class="hint">运行应用 → 趋势页截图 → 保存为 posters/screenshots/stats.png</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 功能说明 -->
+      <div class="feature-desc">
+        <div class="feature-desc-title">
+          <div class="feature-desc-icon blue">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          </div>
+          清晰的图表展示
+        </div>
+        <div class="feature-desc-text">
+          每日热量变化用折线图展示，月度汇总数据一目了然，帮你发现饮食规律。
+        </div>
+      </div>
+
+      <div class="highlight-list">
+        <div class="highlight-item">
+          <div class="highlight-dot"></div>
+          <div class="highlight-text">每日净热量趋势折线图</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-dot"></div>
+          <div class="highlight-text">月度摄入、消耗、净热量汇总</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-dot"></div>
+          <div class="highlight-text">自动判断热量盈余或缺口</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="poster-footer">
+      <div class="footer-logo">
+        <div class="icon">C</div>
+        <span>Calmorie</span>
+      </div>
+      <span class="footer-tag">卡路里管理助手</span>
+    </div>
+  </div>
+</body>
+</html>

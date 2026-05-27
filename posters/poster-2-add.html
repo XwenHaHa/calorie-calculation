@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmorie - 添加记录</title>
+  <link rel="stylesheet" href="poster.css">
+</head>
+<body>
+  <div class="poster">
+    <div class="poster-header">
+      <div class="poster-number">02</div>
+      <h1 class="poster-title">轻松记录</h1>
+      <p class="poster-subtitle">点几下就能记录一顿饭或一次运动</p>
+    </div>
+
+    <div class="poster-content">
+      <!-- 截图区域 -->
+      <div class="screenshot-container">
+        <div class="screenshot-frame">
+          <img src="screenshots/add.png" alt="添加记录截图"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="screenshot-placeholder" style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            <div>请截图替换</div>
+            <div class="hint">运行应用 → 点击 + 按钮 → 截图 → 保存为 posters/screenshots/add.png</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 功能说明 -->
+      <div class="feature-desc">
+        <div class="feature-desc-title">
+          <div class="feature-desc-icon orange">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </div>
+          内置常见食物和运动
+        </div>
+        <div class="feature-desc-text">
+          不用自己查热量，从列表里选就行。也可以自定义输入，灵活方便。
+        </div>
+      </div>
+
+      <div class="highlight-list">
+        <div class="highlight-item">
+          <div class="highlight-dot"></div>
+          <div class="highlight-text">100+ 常见食物热量数据</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-dot"></div>
+          <div class="highlight-text">多种运动类型可选</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-dot"></div>
+          <div class="highlight-text">支持自定义名称和热量</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="poster-footer">
+      <div class="footer-logo">
+        <div class="icon">C</div>
+        <span>Calmorie</span>
+      </div>
+      <span class="footer-tag">卡路里管理助手</span>
+    </div>
+  </div>
+</body>
+</html>

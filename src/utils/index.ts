@@ -199,6 +199,10 @@ export const getExerciseEmoji = (name: string): string => {
 };
 
 export function getDisplayTitle(title: string, t: TFunction): string {
+  // If title is already a translation key like "food:rice" (for backward compatibility)
+  if (title.includes(':')) {
+    return t(title);
+  }
   const key = TITLE_TO_KEY[title];
   if (key) return t(key);
   return title;
