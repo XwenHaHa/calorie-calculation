@@ -42,7 +42,7 @@ export function AddRecordModal({ onClose }: AddRecordModalProps) {
     onClose();
   };
 
-  const handleQuickFood = (nameKey: string, _name: string, cal: number) => {
+  const handleQuickFood = (_nameKey: string, _name: string, cal: number) => {
     addNewRecord({
       type: 'food',
       title: _name,
@@ -52,7 +52,11 @@ export function AddRecordModal({ onClose }: AddRecordModalProps) {
     onClose();
   };
 
-  const handleQuickExercise = (nameKey: string, _name: string, cal: number) => {
+  const handleQuickExercise = (
+    _nameKey: string,
+    _name: string,
+    cal: number,
+  ) => {
     addNewRecord({
       type: 'exercise',
       title: _name,
