@@ -55,7 +55,7 @@
 
 **在线预览**: [http://101.96.208.101:5188/](http://101.96.208.101:5188/)
 
-<!-- ![Calmorie 演示](https://github.com/XwenHaHa/calorie-calculation/blob/main/screenshots/demo.gif) -->
+![Calmorie 演示](https://github.com/XwenHaHa/calorie-calculation/blob/main/screenshots/demo.gif)
 
 ## 快速开始
 
