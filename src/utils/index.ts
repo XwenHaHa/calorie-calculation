@@ -2,7 +2,7 @@ import { format, parseISO, isToday, isYesterday } from 'date-fns';
 import { zhCN, enUS } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import type { TFunction } from 'i18next';
-import { QUICK_FOOD_ITEMS, EXERCISE_TYPES } from '../constants';
+import { QUICK_FOOD_ITEMS, EXERCISE_TYPES, FOOD_DATABASE, EXERCISE_DATABASE } from '../constants';
 
 const FOOD_EMOJI_MAP: Record<string, string> = {
   '米饭': '🍚', '饭': '🍚', '炒饭': '🍚',
@@ -206,6 +206,24 @@ export function getDisplayTitle(title: string, t: TFunction): string {
   const key = TITLE_TO_KEY[title];
   if (key) return t(key);
   return title;
+}
+
+export function searchFoods(query: string) {
+  if (!query.trim()) return [];
+  const q = query.trim().toLowerCase();
+  return FOOD_DATABASE.filter(item =>
+    item.name.toLowerCase().includes(q) ||
+    item.aliases.some(a => a.toLowerCase().includes(q))
+  );
+}
+
+export function searchExercises(query: string) {
+  if (!query.trim()) return [];
+  const q = query.trim().toLowerCase();
+  return EXERCISE_DATABASE.filter(item =>
+    item.name.toLowerCase().includes(q) ||
+    item.aliases.some(a => a.toLowerCase().includes(q))
+  );
 }
 
 export { TITLE_TO_KEY };
