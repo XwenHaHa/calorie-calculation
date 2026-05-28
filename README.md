@@ -55,7 +55,7 @@
 
 **在线预览**: [http://101.96.208.101:5188/](http://101.96.208.101:5188/)
 
-![Calmorie 演示](https://github.com/XwenHaHa/calorie-calculation/blob/main/screenshots/demo.gif)
+![Calmorie 演示](https://raw.githubusercontent.com/XwenHaHa/calorie-calculation/main/screenshots/demo.gif)
 
 ## 快速开始
 
@@ -231,7 +231,7 @@ cp .env.example .env
 
 ## 浏览器支持
 
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/main/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" />](http://godban.github.io/browsers-support-badges/)<br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/main/src/safari/safari_48x48.png" alt="Safari" width="24px" />](http://godban.github.io/browsers-support-badges/)<br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/main/src/edge/edge_48x48.png" alt="Edge" width="24px" />](http://godban.github.io/browsers-support-badges/)<br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/main/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" />](http://godban.github.io/browsers-support-badges/)<br>Firefox |
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/main/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" />](http://godban.github.io/browsers-support-badges/)<br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/main/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" />](http://godban.github.io/browsers-support-badges/)<br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/main/src/safari/safari_48x48.png" alt="Safari" width="24px" />](http://godban.github.io/browsers-support-badges/)<br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/main/src/edge/edge_48x48.png" alt="Edge" width="24px" />](http://godban.github.io/browsers-support-badges/)<br>Edge |
 |:---:|:---:|:---:|:---:|
 | ✅ | ✅ | ✅ | ✅ |
 
