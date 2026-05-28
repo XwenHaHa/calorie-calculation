@@ -8,5 +8,14 @@
   "basedOnDate": "Based on {{date}} data",
   "tapAbove": "Tap the button above",
   "aiDescription": "AI will analyze your diet and exercise data to provide personalized advice",
-  "generateFailed": "Failed to generate advice, please try again"
+  "generateFailed": "Failed to generate advice, please try again",
+  "history": "History",
+  "historyEmpty": "No history yet",
+  "analysisTime": "Analyzed on {{date}}",
+  "dataSummary": "Daily data",
+  "intake": "Intake",
+  "burn": "Burn",
+  "netCalories": "Net calories",
+  "records": "records",
+  "clearHistory": "Clear history"
 }

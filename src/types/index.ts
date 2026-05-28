@@ -32,3 +32,16 @@ export interface AIAdvice {
   content: string;
   type: 'warning' | 'suggestion' | 'info';
 }
+
+export interface AIHistoryEntry {
+  id: string;
+  createdAt: string;
+  analyzedDate: string;
+  advice: string[];
+  dailySummary: {
+    totalIntake: number;
+    totalBurn: number;
+    netCalories: number;
+    recordCount: number;
+  };
+}

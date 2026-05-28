@@ -1,6 +1,7 @@
 export const STORAGE_KEYS = {
   RECORDS: 'calmorie_records',
   SETTINGS: 'calmorie_settings',
+  AI_HISTORY: 'calmorie_ai_history',
 } as const;
 
 export const EXERCISE_TYPES = [

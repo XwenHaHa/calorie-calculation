@@ -1,9 +1,11 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApp } from '../store';
 import { generateAIAdvice } from '../services/ai';
+import { getAIHistory, addAIHistory, clearAIHistory, generateId } from '../services/storage';
 import { format } from 'date-fns';
 import { zhCN, enUS } from 'date-fns/locale';
+import type { AIHistoryEntry } from '../types';
 
 export function AIPage() {
   const { state } = useApp();
@@ -11,10 +13,17 @@ export function AIPage() {
   const [loading, setLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   const [adviceDate, setAdviceDate] = useState<Date | null>(null);
+  const [history, setHistory] = useState<AIHistoryEntry[]>([]);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
   const { t, i18n } = useTranslation('ai');
 
   const dateLocale = i18n.language === 'zh' ? zhCN : enUS;
-  const dateFormat = i18n.language === 'zh' ? 'M月dd日' : 'MMM dd';
+  const dateFormat = i18n.language === 'zh' ? 'M月dd日 HH:mm' : 'MMM dd, HH:mm';
+  const dayFormat = i18n.language === 'zh' ? 'M月dd日' : 'MMM dd';
+
+  useEffect(() => {
+    setHistory(getAIHistory());
+  }, []);
 
   const handleGenerate = useCallback(async () => {
     setLoading(true);
@@ -27,6 +36,22 @@ export function AIPage() {
       setAdvice(result);
       setAdviceDate(state.selectedDate);
       setGenerated(true);
+
+      // Save to history
+      const entry: AIHistoryEntry = {
+        id: generateId(),
+        createdAt: new Date().toISOString(),
+        analyzedDate: state.dailySummary.date,
+        advice: result,
+        dailySummary: {
+          totalIntake: state.dailySummary.totalIntake,
+          totalBurn: state.dailySummary.totalBurn,
+          netCalories: state.dailySummary.netCalories,
+          recordCount: state.dailySummary.recordCount,
+        },
+      };
+      addAIHistory(entry);
+      setHistory(getAIHistory());
     } catch (error) {
       console.error('Failed to generate advice:', error);
       setAdvice([t('generateFailed')]);
@@ -34,6 +59,15 @@ export function AIPage() {
       setLoading(false);
     }
   }, [state.records, state.dailySummary, state.monthlyStats, state.selectedDate, t]);
+
+  const handleClearHistory = () => {
+    clearAIHistory();
+    setHistory([]);
+  };
+
+  const toggleExpand = (id: string) => {
+    setExpandedId(expandedId === id ? null : id);
+  };
 
   return (
     <div className="pb-40 px-6 pt-16">
@@ -68,7 +102,7 @@ export function AIPage() {
         <div className="space-y-4 mt-6">
           {adviceDate && (
             <p className="text-sm text-gray-400 px-1">
-              {t('basedOnDate', { date: format(adviceDate, dateFormat, { locale: dateLocale }) })}
+              {t('basedOnDate', { date: format(adviceDate, dayFormat, { locale: dateLocale }) })}
             </p>
           )}
           {advice.map((item, index) => (
@@ -95,6 +129,69 @@ export function AIPage() {
           </div>
           <p className="text-gray-500 mb-2">{t('tapAbove')}</p>
           <p className="text-gray-400 text-sm">{t('aiDescription')}</p>
+        </div>
+      )}
+
+      {/* History section */}
+      {history.length > 0 && (
+        <div className="mt-10">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-800">{t('history')}</h3>
+            <button
+              onClick={handleClearHistory}
+              className="text-sm text-gray-400 hover:text-gray-600"
+            >
+              {t('clearHistory')}
+            </button>
+          </div>
+
+          <div className="space-y-3">
+            {history.map(entry => (
+              <div key={entry.id} className="glass rounded-2xl overflow-hidden">
+                <button
+                  onClick={() => toggleExpand(entry.id)}
+                  className="w-full px-5 py-4 flex items-center justify-between text-left"
+                >
+                  <div>
+                    <p className="text-sm text-gray-500">
+                      {t('analysisTime', { date: format(new Date(entry.createdAt), dateFormat, { locale: dateLocale }) })}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {t('dataSummary')}: {t('intake')} {entry.dailySummary.totalIntake}{t('burn') === '消耗' ? '千卡' : 'kcal'} / {t('burn')} {entry.dailySummary.totalBurn}{t('burn') === '消耗' ? '千卡' : 'kcal'} / {t('records')} {entry.dailySummary.recordCount}
+                    </p>
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`h-4 w-4 text-gray-400 transition-transform ${expandedId === entry.id ? 'rotate-180' : ''}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedId === entry.id && (
+                  <div className="px-5 pb-4 space-y-2">
+                    {entry.advice.map((item, index) => (
+                      <div key={index} className="flex items-start gap-3 bg-white/50 rounded-xl p-3">
+                        <span className="text-sm flex-shrink-0">
+                          {index === 0 ? '🌿' : index === 1 ? '🍔' : '🏃'}
+                        </span>
+                        <p className="text-sm text-gray-600 leading-6">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {history.length === 0 && !loading && !generated && (
+        <div className="mt-8 text-center">
+          <p className="text-gray-400 text-sm">{t('historyEmpty')}</p>
         </div>
       )}
     </div>

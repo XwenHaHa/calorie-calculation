@@ -8,5 +8,14 @@
   "basedOnDate": "基于 {{date}} 的数据",
   "tapAbove": "点击上方按钮",
   "aiDescription": "AI 将分析您的饮食和运动数据，提供个性化建议",
-  "generateFailed": "生成建议失败，请重试"
+  "generateFailed": "生成建议失败，请重试",
+  "history": "历史记录",
+  "historyEmpty": "暂无历史记录",
+  "analysisTime": "分析于 {{date}}",
+  "dataSummary": "当日数据",
+  "intake": "摄入",
+  "burn": "消耗",
+  "netCalories": "净热量",
+  "records": "记录",
+  "clearHistory": "清除历史"
 }

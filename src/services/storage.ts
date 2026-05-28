@@ -1,4 +1,4 @@
-import type { Transaction, DailySummary, MonthlyStats } from '../types';
+import type { Transaction, DailySummary, MonthlyStats, AIHistoryEntry } from '../types';
 import { STORAGE_KEYS } from '../constants';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, parseISO } from 'date-fns';
 
@@ -84,4 +84,21 @@ export const getRecordsByDate = (date: Date): Transaction[] => {
 
 export const generateId = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
+};
+
+export const getAIHistory = (): AIHistoryEntry[] => {
+  const data = localStorage.getItem(STORAGE_KEYS.AI_HISTORY);
+  return data ? JSON.parse(data) : [];
+};
+
+export const addAIHistory = (entry: AIHistoryEntry): void => {
+  const history = getAIHistory();
+  history.unshift(entry);
+  // Keep only last 20 entries
+  if (history.length > 20) history.length = 20;
+  localStorage.setItem(STORAGE_KEYS.AI_HISTORY, JSON.stringify(history));
+};
+
+export const clearAIHistory = (): void => {
+  localStorage.removeItem(STORAGE_KEYS.AI_HISTORY);
 };
