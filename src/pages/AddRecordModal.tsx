@@ -1,9 +1,13 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useApp } from '../store';
 import { searchFoods, searchExercises } from '../utils';
 import { EXERCISE_TYPES, QUICK_FOOD_ITEMS } from '../constants';
+import { recognizeFood } from '../services/food-recognition';
 import type { FoodItem, ExerciseItem } from '../constants';
+import type { RecognitionResult } from '../services/food-recognition';
+import { FoodRecognitionResult } from '../components/FoodRecognitionResult';
 
 interface AddRecordModalProps {
   onClose: () => void;
@@ -17,6 +21,13 @@ export function AddRecordModal({ onClose }: AddRecordModalProps) {
   const [manualTitle, setManualTitle] = useState('');
   const [manualCalories, setManualCalories] = useState('');
   const { t } = useTranslation(['add', 'common']);
+
+  // Photo recognition state
+  const [showPhotoSource, setShowPhotoSource] = useState(false);
+  const [recognizing, setRecognizing] = useState(false);
+  const [recognitionResult, setRecognitionResult] = useState<RecognitionResult | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>('');
+  const [recognitionError, setRecognitionError] = useState(false);
 
   // Quantity/duration selection state
   const [selectedFood, setSelectedFood] = useState<FoodItem | null>(null);
@@ -117,6 +128,39 @@ export function AddRecordModal({ onClose }: AddRecordModalProps) {
     setSelectedFood(null);
     setSelectedExercise(null);
     setShowManual(false);
+    setRecognitionResult(null);
+    setRecognitionError(false);
+  };
+
+  const handleTakePhoto = async (source: CameraSource) => {
+    setShowPhotoSource(false);
+    try {
+      const photo = await Camera.getPhoto({
+        quality: 80,
+        allowEditing: false,
+        resultType: CameraResultType.Base64,
+        source,
+      });
+
+      if (!photo.base64String) return;
+
+      setImagePreview(`data:image/jpeg;base64,${photo.base64String}`);
+      setRecognizing(true);
+      setRecognitionError(false);
+
+      const result = await recognizeFood(photo.base64String);
+      setRecognitionResult(result);
+    } catch {
+      setRecognitionError(true);
+    } finally {
+      setRecognizing(false);
+    }
+  };
+
+  const handleBackFromRecognition = () => {
+    setRecognitionResult(null);
+    setImagePreview('');
+    setRecognitionError(false);
   };
 
   return (
@@ -155,8 +199,57 @@ export function AddRecordModal({ onClose }: AddRecordModalProps) {
           </button>
         </div>
 
-        {/* Quantity/Duration selector */}
-        {isSelecting ? (
+        {/* Photo source selection popup */}
+        {showPhotoSource && (
+          <div className="mb-3 bg-white/80 rounded-2xl p-2 space-y-1">
+            <button
+              onClick={() => handleTakePhoto(CameraSource.Camera)}
+              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/60 rounded-xl transition-colors text-left"
+            >
+              <span className="text-xl">📷</span>
+              <span className="text-gray-800 text-sm">{t('takePhoto')}</span>
+            </button>
+            <button
+              onClick={() => handleTakePhoto(CameraSource.Photos)}
+              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/60 rounded-xl transition-colors text-left"
+            >
+              <span className="text-xl">🖼️</span>
+              <span className="text-gray-800 text-sm">{t('chooseFromAlbum')}</span>
+            </button>
+          </div>
+        )}
+
+        {/* Recognizing loading state */}
+        {recognizing && (
+          <div className="flex-1 flex flex-col items-center justify-center py-12">
+            <div className="w-10 h-10 border-3 border-green-500 border-t-transparent rounded-full animate-spin mb-4" />
+            <p className="text-gray-400">{t('recognizing')}</p>
+          </div>
+        )}
+
+        {/* Recognition error */}
+        {recognitionError && !recognizing && (
+          <div className="flex-1 flex flex-col items-center justify-center py-12">
+            <span className="text-4xl mb-3">😕</span>
+            <p className="text-gray-400 mb-4">{t('recognitionFailed')}</p>
+            <button
+              onClick={() => { setRecognitionError(false); setShowPhotoSource(true); }}
+              className="px-6 py-2 bg-green-500 text-white rounded-2xl text-sm"
+            >
+              {t('back')}
+            </button>
+          </div>
+        )}
+
+        {/* Recognition result */}
+        {recognitionResult && !recognizing && !recognitionError ? (
+          <FoodRecognitionResult
+            result={recognitionResult}
+            imagePreview={imagePreview}
+            onBack={handleBackFromRecognition}
+            onClose={onClose}
+          />
+        ) : isSelecting ? (
           <div className="flex-1 overflow-y-auto mb-3 min-h-0">
             <button
               onClick={handleBackToSearch}
@@ -345,6 +438,17 @@ export function AddRecordModal({ onClose }: AddRecordModalProps) {
                   placeholder={mode === 'food' ? t('searchFoodPlaceholder') : t('searchExercisePlaceholder')}
                   className="bg-transparent outline-none flex-1 text-gray-800 placeholder-gray-400"
                 />
+                {mode === 'food' && (
+                  <button
+                    onClick={() => setShowPhotoSource(!showPhotoSource)}
+                    className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/60 transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </button>
+                )}
               </div>
             </div>
 
