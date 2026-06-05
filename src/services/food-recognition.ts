@@ -1,3 +1,7 @@
+import type { AIResult } from '../types';
+import { callAI } from './ai-client';
+import { generateText } from './local-llm';
+
 const AI_CONFIG = {
   baseUrl: import.meta.env.VITE_AI_BASE_URL || 'https://yxai.chat/v1',
   apiKey: import.meta.env.VITE_AI_API_KEY || '',
@@ -41,50 +45,62 @@ const SYSTEM_PROMPT = `你是一个专业的营养师和食物识别助手。用
   "total_calories": 0
 }`;
 
-export async function recognizeFood(imageBase64: string): Promise<RecognitionResult> {
-  const response = await fetch(`${AI_CONFIG.baseUrl}/chat/completions`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${AI_CONFIG.apiKey}`,
-    },
-    body: JSON.stringify({
-      model: AI_CONFIG.model,
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        {
-          role: 'user',
-          content: [
-            { type: 'text', text: '请识别这张照片中的食物并估算热量' },
-            { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${imageBase64}` } },
-          ],
+export async function recognizeFood(imageBase64: string): Promise<AIResult<RecognitionResult>> {
+  return callAI({
+    onlineFn: async () => {
+      const response = await fetch(`${AI_CONFIG.baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${AI_CONFIG.apiKey}`,
         },
-      ],
-    }),
+        body: JSON.stringify({
+          model: AI_CONFIG.model,
+          messages: [
+            { role: 'system', content: SYSTEM_PROMPT },
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: '请识别这张照片中的食物并估算热量' },
+                { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${imageBase64}` } },
+              ],
+            },
+          ],
+        }),
+      });
+
+      if (!response.ok) throw new Error(`API request failed: ${response.status}`);
+
+      const data = await response.json();
+      const content: string = data.choices?.[0]?.message?.content || '';
+
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) throw new Error('无法解析识别结果');
+
+      const result: RecognitionResult = JSON.parse(jsonMatch[0]);
+      if (!result.foods || !Array.isArray(result.foods)) throw new Error('识别结果格式错误');
+
+      result.total_calories = result.foods.reduce(
+        (sum, f) => sum + Math.round(f.calories_per_100g * f.estimated_grams / 100),
+        0
+      );
+      return result;
+    },
+    localFn: async () => {
+      const prompt = '请识别以下食物并估算热量。只返回JSON格式。';
+      const content = await generateText(prompt, SYSTEM_PROMPT);
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) throw new Error('本地模型无法解析识别结果');
+
+      const result: RecognitionResult = JSON.parse(jsonMatch[0]);
+      if (!result.foods || !Array.isArray(result.foods)) throw new Error('识别结果格式错误');
+
+      result.total_calories = result.foods.reduce(
+        (sum, f) => sum + Math.round(f.calories_per_100g * f.estimated_grams / 100),
+        0
+      );
+      return result;
+    },
+    fallbackFn: () => ({ foods: [], total_calories: 0 }),
   });
-
-  if (!response.ok) {
-    throw new Error(`API request failed: ${response.status}`);
-  }
-
-  const data = await response.json();
-  const content: string = data.choices?.[0]?.message?.content || '';
-
-  const jsonMatch = content.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) {
-    throw new Error('无法解析识别结果');
-  }
-
-  const result: RecognitionResult = JSON.parse(jsonMatch[0]);
-
-  if (!result.foods || !Array.isArray(result.foods)) {
-    throw new Error('识别结果格式错误');
-  }
-
-  result.total_calories = result.foods.reduce(
-    (sum, f) => sum + Math.round(f.calories_per_100g * f.estimated_grams / 100),
-    0
-  );
-
-  return result;
 }

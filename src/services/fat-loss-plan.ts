@@ -1,8 +1,10 @@
 import i18next from 'i18next';
-import type { UserProfile, FatLossPlan, DayPlan, Transaction, DailySummary, MonthlyStats } from '../types';
+import type { UserProfile, FatLossPlan, DayPlan, Transaction, DailySummary, MonthlyStats, AIResult } from '../types';
 import { calculateBMR, calculateTDEE, calculateDailyCalorieTarget } from '../utils';
 import { generateId } from './storage';
 import { subDays } from 'date-fns';
+import { callAI } from './ai-client';
+import { generateText } from './local-llm';
 
 const AI_CONFIG = {
   baseUrl: import.meta.env.VITE_AI_BASE_URL || 'https://yxai.chat/v1',
@@ -20,7 +22,7 @@ export async function generateFatLossPlan(
   records: Transaction[],
   dailySummary: DailySummary,
   _monthlyStats: MonthlyStats
-): Promise<FatLossPlan> {
+): Promise<AIResult<FatLossPlan>> {
   const bmr = calculateBMR(profile);
   const tdee = calculateTDEE(bmr, profile.activityLevel);
   const dailyTarget = calculateDailyCalorieTarget(tdee);
@@ -60,53 +62,69 @@ export async function generateFatLossPlan(
     avgBurn,
   });
 
-  try {
-    const response = await fetch(`${AI_CONFIG.baseUrl}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${AI_CONFIG.apiKey}`,
-      },
-      body: JSON.stringify({
-        model: AI_CONFIG.model,
-        messages: [
-          { role: 'system', content: t('systemPrompt') },
-          { role: 'user', content: prompt },
-        ],
-      }),
-    });
+  const systemPrompt = t('systemPrompt');
 
-    if (!response.ok) {
-      throw new Error(`API request failed: ${response.status}`);
-    }
+  const result = await callAI({
+    onlineFn: async () => {
+      const response = await fetch(`${AI_CONFIG.baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${AI_CONFIG.apiKey}`,
+        },
+        body: JSON.stringify({
+          model: AI_CONFIG.model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: prompt },
+          ],
+        }),
+      });
 
-    const data = await response.json();
-    const content: string = data.choices?.[0]?.message?.content || '';
+      if (!response.ok) throw new Error(`API request failed: ${response.status}`);
 
-    const jsonMatch = content.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      throw new Error('无法解析计划结果');
-    }
+      const data = await response.json();
+      const content: string = data.choices?.[0]?.message?.content || '';
 
-    const result: AIPlanResponse = JSON.parse(jsonMatch[0]);
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) throw new Error('无法解析计划结果');
 
-    if (!result.weeklyPlan || !Array.isArray(result.weeklyPlan)) {
-      throw new Error('计划结果格式错误');
-    }
+      const parsed: AIPlanResponse = JSON.parse(jsonMatch[0]);
+      if (!parsed.weeklyPlan || !Array.isArray(parsed.weeklyPlan)) throw new Error('计划结果格式错误');
+      return parsed;
+    },
+    localFn: async () => {
+      const content = await generateText(prompt, systemPrompt);
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) throw new Error('本地模型无法解析计划结果');
 
+      const parsed: AIPlanResponse = JSON.parse(jsonMatch[0]);
+      if (!parsed.weeklyPlan || !Array.isArray(parsed.weeklyPlan)) throw new Error('计划结果格式错误');
+      return parsed;
+    },
+    fallbackFn: () => null,
+  });
+
+  if (result.data) {
     return {
-      id: generateId(),
-      createdAt: new Date().toISOString(),
-      profile,
-      bmr,
-      tdee,
-      dailyCalorieTarget: dailyTarget,
-      weeklyPlan: result.weeklyPlan,
-      tips: result.tips || [],
+      ...result,
+      data: {
+        id: generateId(),
+        createdAt: new Date().toISOString(),
+        profile,
+        bmr,
+        tdee,
+        dailyCalorieTarget: dailyTarget,
+        weeklyPlan: result.data.weeklyPlan,
+        tips: result.data.tips || [],
+      },
     };
-  } catch {
-    return getDefaultPlan(profile, bmr, tdee, dailyTarget);
   }
+
+  return {
+    ...result,
+    data: getDefaultPlan(profile, bmr, tdee, dailyTarget),
+  };
 }
 
 function getDefaultPlan(

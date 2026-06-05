@@ -149,7 +149,7 @@ export function AddRecordModal({ onClose }: AddRecordModalProps) {
       setRecognitionError(false);
 
       const result = await recognizeFood(photo.base64String);
-      setRecognitionResult(result);
+      setRecognitionResult(result.data);
     } catch {
       setRecognitionError(true);
     } finally {

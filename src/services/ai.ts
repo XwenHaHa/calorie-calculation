@@ -1,6 +1,8 @@
 import i18next from 'i18next';
-import type { Transaction, DailySummary, MonthlyStats } from '../types';
+import type { Transaction, DailySummary, MonthlyStats, AIResult } from '../types';
 import { subDays } from 'date-fns';
+import { callAI } from './ai-client';
+import { generateText } from './local-llm';
 
 const AI_CONFIG = {
   baseUrl: import.meta.env.VITE_AI_BASE_URL || 'https://yxai.chat/v1',
@@ -20,7 +22,7 @@ export async function generateAIAdvice(
   records: Transaction[],
   dailySummary: DailySummary,
   monthlyStats: MonthlyStats
-): Promise<string[]> {
+): Promise<AIResult<string[]>> {
   const t = i18next.getFixedT(null, 'prompts');
   const selectedDate = new Date(dailySummary.date);
   const last7Days = subDays(selectedDate, 7);
@@ -45,50 +47,51 @@ export async function generateAIAdvice(
     exerciseCount: exerciseRecords.length,
   });
 
-  try {
-    const response = await fetch(`${AI_CONFIG.baseUrl}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${AI_CONFIG.apiKey}`,
-      },
-      body: JSON.stringify({
-        model: AI_CONFIG.model,
-        messages: [
-          {
-            role: 'system',
-            content: t('systemPrompt'),
-          },
-          {
-            role: 'user',
-            content: prompt,
-          },
-        ],
-      }),
-    });
+  const systemPrompt = t('systemPrompt');
 
-    if (!response.ok) {
-      throw new Error(`API request failed: ${response.status}`);
-    }
+  return callAI({
+    onlineFn: async () => {
+      const response = await fetch(`${AI_CONFIG.baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${AI_CONFIG.apiKey}`,
+        },
+        body: JSON.stringify({
+          model: AI_CONFIG.model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: prompt },
+          ],
+        }),
+      });
 
-    const data: AIResponse = await response.json();
-    const content = data.choices[0]?.message?.content || '';
+      if (!response.ok) throw new Error(`API request failed: ${response.status}`);
 
-    const advice = content
-      .split('\n')
-      .map(line => line.trim())
-      .filter(line => line.length > 0 && line.length <= 50)
-      .slice(0, 3);
+      const data: AIResponse = await response.json();
+      const content = data.choices[0]?.message?.content || '';
 
-    if (advice.length === 0) {
-      return getDefaultAdvice(dailySummary, monthlyStats);
-    }
+      const advice = content
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0 && line.length <= 50)
+        .slice(0, 3);
 
-    return advice;
-  } catch (error) {
-    console.error('AI advice generation failed:', error);
-    return getDefaultAdvice(dailySummary, monthlyStats);
-  }
+      if (advice.length === 0) throw new Error('No valid advice');
+      return advice;
+    },
+    localFn: async () => {
+      const content = await generateText(prompt, systemPrompt);
+      const advice = content
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0 && line.length <= 80)
+        .slice(0, 3);
+      if (advice.length === 0) throw new Error('No valid advice from local model');
+      return advice;
+    },
+    fallbackFn: () => getDefaultAdvice(dailySummary, monthlyStats),
+  });
 }
 
 function getDefaultAdvice(dailySummary: DailySummary, monthlyStats: MonthlyStats): string[] {

@@ -59,6 +59,18 @@
   "friday": "周五",
   "saturday": "周六",
   "sunday": "周日",
+  "modelSettings": "AI 模型设置",
+  "onlineMode": "在线模式",
+  "localMode": "本地模式",
+  "autoMode": "自动模式",
+  "onlineModeDesc": "使用在线 AI 服务，需要网络连接",
+  "localModeDesc": "使用手机端本地模型，完全离线可用",
+  "autoModeDesc": "优先在线，断网时自动切换本地模型",
+  "modelLoaded": "模型已加载",
+  "modelNotLoaded": "模型未加载",
+  "selectModel": "选择模型文件",
+  "modelPath": "模型路径",
+  "onlineFailedHint": "在线模型不可用，已切换到本地模型",
   "systemPrompt": "你是一个专业的营养师和健身教练。根据用户的身体数据和饮食记录，制定个性化的减脂计划。",
   "userPrompt": "用户信息：\n- 性别：{{gender}}，年龄：{{age}}岁，身高：{{height}}cm，体重：{{weight}}kg\n- 活动水平：{{activityLevel}}\n- 基础代谢率(BMR)：{{bmr}}千卡\n- 每日总消耗(TDEE)：{{tdee}}千卡\n- 每日热量目标：{{dailyTarget}}千卡\n- 近7天平均摄入：{{avgIntake}}千卡\n- 近7天平均消耗：{{avgBurn}}千卡\n\n请为用户制定一周的减脂计划，每天包含早餐、午餐、晚餐、加餐的具体建议和热量，以及一项运动建议。\n要求：\n1. 每日总热量控制在{{dailyTarget}}千卡左右\n2. 食物建议要具体、家常、易操作\n3. 运动建议要适合用户活动水平\n4. 额外给出3条减脂小贴士\n\n请严格以JSON格式返回，不要包含其他文字：\n{\n  \"weeklyPlan\": [\n    {\n      \"day\": \"周一\",\n      \"meals\": [\n        {\"type\": \"breakfast\", \"suggestion\": \"具体食物\", \"calories\": 350},\n        {\"type\": \"lunch\", \"suggestion\": \"具体食物\", \"calories\": 450},\n        {\"type\": \"dinner\", \"suggestion\": \"具体食物\", \"calories\": 400},\n        {\"type\": \"snack\", \"suggestion\": \"具体食物\", \"calories\": 80}\n      ],\n      \"exercise\": {\"suggestion\": \"运动名称时长\", \"duration\": 30, \"burnCalories\": 150},\n      \"totalCalories\": 1280\n    }\n  ],\n  \"tips\": [\"建议1\", \"建议2\", \"建议3\"]\n}"
 }

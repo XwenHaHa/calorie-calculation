@@ -1,4 +1,4 @@
-import type { Transaction, DailySummary, MonthlyStats, AIHistoryEntry, UserProfile, FatLossPlan } from '../types';
+import type { Transaction, DailySummary, MonthlyStats, AIHistoryEntry, UserProfile, FatLossPlan, ModelPreference } from '../types';
 import { STORAGE_KEYS } from '../constants';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, parseISO } from 'date-fns';
 
@@ -127,4 +127,22 @@ export const getFatLossPlan = (): FatLossPlan | null => {
 
 export const saveFatLossPlan = (plan: FatLossPlan): void => {
   localStorage.setItem(STORAGE_KEYS.FAT_LOSS_PLAN, JSON.stringify(plan));
+};
+
+export const getModelPreference = (): ModelPreference => {
+  const val = localStorage.getItem(STORAGE_KEYS.MODEL_PREFERENCE);
+  if (val === 'online' || val === 'local' || val === 'auto') return val;
+  return 'auto';
+};
+
+export const saveModelPreference = (pref: ModelPreference): void => {
+  localStorage.setItem(STORAGE_KEYS.MODEL_PREFERENCE, pref);
+};
+
+export const getLocalModelPath = (): string | null => {
+  return localStorage.getItem(STORAGE_KEYS.LOCAL_MODEL_PATH);
+};
+
+export const saveLocalModelPath = (path: string): void => {
+  localStorage.setItem(STORAGE_KEYS.LOCAL_MODEL_PATH, path);
 };

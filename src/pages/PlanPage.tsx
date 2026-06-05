@@ -23,9 +23,12 @@ export function PlanPage() {
     setPlan(getFatLossPlan());
   }, []);
 
+  const [onlineFailed, setOnlineFailed] = useState(false);
+
   const handleGenerate = async () => {
     if (!profile) return;
     setLoading(true);
+    setOnlineFailed(false);
     try {
       const result = await generateFatLossPlan(
         profile,
@@ -33,8 +36,9 @@ export function PlanPage() {
         state.dailySummary,
         state.monthlyStats
       );
-      saveFatLossPlan(result);
-      setPlan(result);
+      saveFatLossPlan(result.data);
+      setPlan(result.data);
+      setOnlineFailed(!!result.onlineFailed);
     } catch {
       // error handled in service
     } finally {
@@ -143,6 +147,13 @@ export function PlanPage() {
       >
         {loading ? t('generating') : plan ? t('regeneratePlan') : t('generatePlan')}
       </button>
+
+      {onlineFailed && (
+        <div className="mb-4 px-4 py-2.5 bg-orange-50 rounded-2xl flex items-center gap-2">
+          <span className="text-sm">⚠️</span>
+          <p className="text-xs text-orange-600">{t('onlineFailedHint')}</p>
+        </div>
+      )}
 
       {/* Loading */}
       {loading && (

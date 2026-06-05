@@ -84,3 +84,11 @@ export interface ExercisePlan {
   duration: number;
   burnCalories: number;
 }
+
+export type ModelPreference = 'online' | 'local' | 'auto';
+
+export interface AIResult<T> {
+  data: T;
+  source: 'online' | 'local';
+  onlineFailed?: boolean;
+}

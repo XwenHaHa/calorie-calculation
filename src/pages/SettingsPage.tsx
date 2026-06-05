@@ -1,13 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getUserProfile, saveUserProfile } from '../services/storage';
-import type { UserProfile } from '../types';
+import { getUserProfile, saveUserProfile, getModelPreference, saveModelPreference, getLocalModelPath, saveLocalModelPath } from '../services/storage';
+import { initLocalModel, isModelReady, releaseModel } from '../services/local-llm';
+import type { UserProfile, ModelPreference } from '../types';
 
 interface SettingsPageProps {
   onClose: () => void;
 }
 
 const ACTIVITY_LEVELS: UserProfile['activityLevel'][] = ['sedentary', 'light', 'moderate', 'active'];
+const MODEL_OPTIONS: { key: ModelPreference; icon: string }[] = [
+  { key: 'online', icon: '☁️' },
+  { key: 'local', icon: '📱' },
+  { key: 'auto', icon: '🔄' },
+];
 
 export function SettingsPage({ onClose }: SettingsPageProps) {
   const { t } = useTranslation('plan');
@@ -19,6 +25,10 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
   const [targetWeight, setTargetWeight] = useState('');
   const [saved, setSaved] = useState(false);
 
+  const [modelPref, setModelPref] = useState<ModelPreference>('auto');
+  const [modelPath, setModelPath] = useState<string>('');
+  const [modelLoaded, setModelLoaded] = useState(false);
+
   useEffect(() => {
     const profile = getUserProfile();
     if (profile) {
@@ -29,6 +39,9 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       setActivityLevel(profile.activityLevel);
       if (profile.targetWeight) setTargetWeight(String(profile.targetWeight));
     }
+    setModelPref(getModelPreference());
+    setModelPath(getLocalModelPath() || '');
+    setModelLoaded(isModelReady());
   }, []);
 
   const handleSave = () => {
@@ -43,6 +56,27 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
     saveUserProfile(profile);
     setSaved(true);
     setTimeout(() => setSaved(false), 1500);
+  };
+
+  const handleModelPrefChange = (pref: ModelPreference) => {
+    setModelPref(pref);
+    saveModelPreference(pref);
+  };
+
+  const handleLoadModel = async () => {
+    if (!modelPath) return;
+    try {
+      await initLocalModel(modelPath);
+      setModelLoaded(true);
+    } catch (e) {
+      console.error('Failed to load model:', e);
+      setModelLoaded(false);
+    }
+  };
+
+  const handleUnloadModel = async () => {
+    await releaseModel();
+    setModelLoaded(false);
   };
 
   return (
@@ -60,6 +94,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
         </div>
 
         <div className="flex-1 overflow-y-auto space-y-4 min-h-0">
+          {/* Body data */}
           <div className="grid grid-cols-3 gap-3">
             <div>
               <label className="text-xs text-gray-400 block mb-1">{t('weight')} ({t('kg')})</label>
@@ -127,9 +162,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                     </p>
                   </div>
                   {activityLevel === level && (
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+                    <div className="w-2 h-2 bg-white rounded-full flex-shrink-0" />
                   )}
                 </button>
               ))}
@@ -145,6 +178,66 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
               placeholder={t('targetWeightDesc')}
               className="w-full px-4 py-3 bg-white/70 rounded-2xl outline-none text-gray-800 text-center font-medium"
             />
+          </div>
+
+          {/* Model settings */}
+          <div className="pt-2 border-t border-gray-200/50">
+            <label className="text-xs text-gray-400 block mb-3">{t('modelSettings')}</label>
+            <div className="space-y-2">
+              {MODEL_OPTIONS.map(opt => (
+                <button
+                  key={opt.key}
+                  onClick={() => handleModelPrefChange(opt.key)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-left transition-colors ${
+                    modelPref === opt.key
+                      ? 'glass border-2 border-green-500'
+                      : 'bg-white/50 border-2 border-transparent'
+                  }`}
+                >
+                  <span className="text-lg">{opt.icon}</span>
+                  <div className="flex-1">
+                    <p className={`text-sm font-medium ${modelPref === opt.key ? 'text-green-600' : 'text-gray-700'}`}>
+                      {t(opt.key + 'Mode')}
+                    </p>
+                    <p className="text-xs text-gray-400">{t(opt.key + 'ModeDesc')}</p>
+                  </div>
+                  {modelPref === opt.key && (
+                    <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0" />
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {/* Local model path */}
+            {modelPref === 'local' && (
+              <div className="mt-3 space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${modelLoaded ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500'}`}>
+                    {modelLoaded ? t('modelLoaded') : t('modelNotLoaded')}
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  value={modelPath}
+                  onChange={e => {
+                    setModelPath(e.target.value);
+                    saveLocalModelPath(e.target.value);
+                  }}
+                  placeholder={t('modelPath')}
+                  className="w-full px-4 py-3 bg-white/70 rounded-2xl outline-none text-gray-800 text-sm"
+                />
+                <button
+                  onClick={modelLoaded ? handleUnloadModel : handleLoadModel}
+                  className={`w-full py-3 rounded-2xl text-sm font-medium ${
+                    modelLoaded
+                      ? 'bg-red-50 text-red-500'
+                      : 'bg-green-50 text-green-600'
+                  }`}
+                >
+                  {modelLoaded ? '卸载模型' : t('selectModel')}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 

@@ -5,6 +5,8 @@ export const STORAGE_KEYS = {
   USER_PROFILE: 'calmorie_user_profile',
   ONBOARDING_DONE: 'calmorie_onboarding_done',
   FAT_LOSS_PLAN: 'calmorie_fat_loss_plan',
+  MODEL_PREFERENCE: 'calmorie_model_preference',
+  LOCAL_MODEL_PATH: 'calmorie_local_model_path',
 } as const;
 
 export const EXERCISE_TYPES = [
