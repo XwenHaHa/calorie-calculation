@@ -6,111 +6,87 @@
   <title>Calmorie - 使用场景</title>
   <link rel="stylesheet" href="poster.css">
   <style>
-    .scenario-card {
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.6);
-    }
-    .scenario-header {
-      display: flex;
-      align-items: center;
+    .scene-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 10px;
     }
-    .scenario-icon {
+    .scene-card {
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 14px;
+      padding: 18px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      text-align: center;
+    }
+    .scene-card-icon {
       width: 44px;
       height: 44px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
+      margin: 0 auto 10px;
     }
-    .scenario-title {
-      font-size: 1rem;
+    .scene-card-title {
+      font-size: 0.85rem;
       font-weight: 600;
       color: #1f2937;
+      margin-bottom: 4px;
     }
-    .scenario-desc {
-      font-size: 0.85rem;
-      color: #4b5563;
-      line-height: 1.6;
-    }
-    .scenario-example {
-      margin-top: 10px;
-      padding: 10px 12px;
-      background: #f9fafb;
-      border-radius: 10px;
-      font-size: 0.8rem;
+    .scene-card-desc {
+      font-size: 0.75rem;
       color: #6b7280;
-    }
-    .scenario-example strong {
-      color: #22c55e;
+      line-height: 1.4;
     }
   </style>
 </head>
 <body>
   <div class="poster">
-    <div class="poster-header">
+    <div class="poster-left">
       <div class="poster-number">08</div>
       <h1 class="poster-title">谁适合用</h1>
       <p class="poster-subtitle">适合每一个想要管理热量的你</p>
-    </div>
-
-    <div class="poster-content">
-      <div class="scenario-card">
-        <div class="scenario-header">
-          <div class="scenario-icon" style="background: #fef3c7;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"></path><path d="M12 20V4"></path><path d="M6 20v-6"></path></svg>
+      <div class="scene-grid">
+        <div class="scene-card">
+          <div class="scene-card-icon" style="background: #fef3c7;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M18 20V10"></path><path d="M12 20V4"></path><path d="M6 20v-6"></path></svg>
           </div>
-          <div class="scenario-title">正在减肥的你</div>
+          <div class="scene-card-title">正在减肥</div>
+          <div class="scene-card-desc">每天吃了多少心里有数</div>
         </div>
-        <div class="scenario-desc">每天吃了多少、消耗多少，心里有数才能瘦得科学</div>
-        <div class="scenario-example">比如：午餐吃了一碗米饭 + 红烧肉，<strong>+650千卡</strong>；晚上跑步30分钟，<strong>-300千卡</strong></div>
-      </div>
-
-      <div class="scenario-card">
-        <div class="scenario-header">
-          <div class="scenario-icon" style="background: #dcfce7;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5L17.5 17.5"></path><path d="M6.5 17.5L17.5 6.5"></path><circle cx="12" cy="12" r="10"></circle></svg>
+        <div class="scene-card">
+          <div class="scene-card-icon" style="background: #dcfce7;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M6.5 6.5L17.5 17.5"></path><path d="M6.5 17.5L17.5 6.5"></path><circle cx="12" cy="12" r="10"></circle></svg>
           </div>
-          <div class="scenario-title">健身增肌的你</div>
+          <div class="scene-card-title">健身增肌</div>
+          <div class="scene-card-desc">确保吃够热量和营养</div>
         </div>
-        <div class="scenario-desc">确保吃够热量和蛋白质，让每一滴汗水都不白流</div>
-        <div class="scenario-example">今天力量训练消耗 <strong>400千卡</strong>，需要额外补充蛋白质和碳水</div>
-      </div>
-
-      <div class="scenario-card">
-        <div class="scenario-header">
-          <div class="scenario-icon" style="background: #dbeafe;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"></path></svg>
+        <div class="scene-card">
+          <div class="scene-card-icon" style="background: #dbeafe;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"></path></svg>
           </div>
-          <div class="scenario-title">想养成好习惯</div>
+          <div class="scene-card-title">养成习惯</div>
+          <div class="scene-card-desc">记录本身就是自律</div>
         </div>
-        <div class="scenario-desc">记录本身就是一种自律，从今天开始关注自己的饮食</div>
-        <div class="scenario-example">坚持记录一周后，你会发现自己的饮食规律</div>
-      </div>
-
-      <div class="scenario-card">
-        <div class="scenario-header">
-          <div class="scenario-icon" style="background: #fce7f3;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
+        <div class="scene-card">
+          <div class="scene-card-icon" style="background: #fce7f3;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
           </div>
-          <div class="scenario-title">医生建议你控制</div>
+          <div class="scene-card-title">医生建议</div>
+          <div class="scene-card-desc">配合医嘱监控饮食</div>
         </div>
-        <div class="scenario-desc">配合医嘱监控饮食，把热量管理变成日常小事</div>
-        <div class="scenario-example">医生说要控制每日摄入在 <strong>1800千卡</strong> 以内，用这个记录很方便</div>
       </div>
     </div>
-
-    <div class="poster-footer">
-      <div class="footer-logo">
-        <div class="icon">C</div>
-        <span>Calmorie</span>
+    <div class="poster-right">
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;">
+        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
+        </div>
+        <div style="font-size: 1rem; font-weight: 600; color: #1f2937; margin-bottom: 8px;">人人可用</div>
+        <div style="font-size: 0.85rem; color: #6b7280; line-height: 1.6;">
+          不限年龄<br>不限场景<br>随时开始
+        </div>
       </div>
-      <span class="footer-tag">人人可用</span>
     </div>
   </div>
 </body>

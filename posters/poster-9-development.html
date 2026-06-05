@@ -6,149 +6,97 @@
   <title>Calmorie - 落地过程</title>
   <link rel="stylesheet" href="poster.css">
   <style>
-    .timeline {
-      position: relative;
-      padding-left: 24px;
+    .dev-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
     }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 8px;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: #e5e7eb;
-    }
-    .timeline-item {
-      position: relative;
-      margin-bottom: 20px;
-      padding: 16px;
-      background: rgba(255, 255, 255, 0.85);
+    .dev-card {
+      background: rgba(255, 255, 255, 0.75);
       border-radius: 14px;
+      padding: 16px;
       border: 1px solid rgba(255, 255, 255, 0.6);
+      text-align: center;
     }
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -20px;
-      top: 20px;
-      width: 12px;
-      height: 12px;
+    .dev-card-num {
+      width: 32px;
+      height: 32px;
       background: #22c55e;
+      color: white;
       border-radius: 50%;
-      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin: 0 auto 10px;
     }
-    .timeline-title {
-      font-size: 0.95rem;
+    .dev-card-title {
+      font-size: 0.85rem;
       font-weight: 600;
       color: #1f2937;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
-    .timeline-desc {
-      font-size: 0.85rem;
-      color: #4b5563;
-      line-height: 1.5;
-    }
-    .timeline-result {
-      margin-top: 8px;
-      padding: 8px 12px;
-      background: #f0fdf4;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      color: #16a34a;
-    }
-    .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 16px;
-    }
-    .stat-item {
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: 12px;
-      padding: 14px;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.6);
-    }
-    .stat-value {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #22c55e;
-    }
-    .stat-label {
+    .dev-card-desc {
       font-size: 0.75rem;
       color: #6b7280;
-      margin-top: 2px;
+      line-height: 1.4;
     }
   </style>
 </head>
 <body>
   <div class="poster">
-    <div class="poster-header">
+    <div class="poster-left">
       <div class="poster-number">09</div>
       <h1 class="poster-title">落地过程</h1>
       <p class="poster-subtitle">从想法到成品，一步步走来</p>
-    </div>
-
-    <div class="poster-content">
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-title">确定需求</div>
-          <div class="timeline-desc">想做一个简单好用的卡路里记录工具，不用注册、没有广告</div>
-          <div class="timeline-result">核心功能：记录食物/运动 + 每日统计 + AI 建议</div>
+      <div class="dev-grid">
+        <div class="dev-card">
+          <div class="dev-card-num">1</div>
+          <div class="dev-card-title">确定需求</div>
+          <div class="dev-card-desc">简单好用的热量工具</div>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-title">设计界面</div>
-          <div class="timeline-desc">采用清新简洁的风格，大圆角 + 毛玻璃效果，让界面看起来舒服</div>
-          <div class="timeline-result">设计语言：绿色主题，柔和亲切</div>
+        <div class="dev-card">
+          <div class="dev-card-num">2</div>
+          <div class="dev-card-title">设计界面</div>
+          <div class="dev-card-desc">清新简洁的风格</div>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-title">开发实现</div>
-          <div class="timeline-desc">用现代化的前端技术搭建，确保打开速度快、操作流畅</div>
-          <div class="timeline-result">首屏加载 < 1 秒，操作无卡顿</div>
+        <div class="dev-card">
+          <div class="dev-card-num">3</div>
+          <div class="dev-card-title">开发实现</div>
+          <div class="dev-card-desc">确保流畅快速</div>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-title">测试优化</div>
-          <div class="timeline-desc">在不同手机和浏览器上测试，修复各种小问题</div>
-          <div class="timeline-result">支持 iOS、Android、电脑浏览器</div>
+        <div class="dev-card">
+          <div class="dev-card-num">4</div>
+          <div class="dev-card-title">测试优化</div>
+          <div class="dev-card-desc">多设备兼容测试</div>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-title">持续迭代</div>
-          <div class="timeline-desc">根据使用反馈不断改进，添加新功能、优化体验</div>
-          <div class="timeline-result">已支持中英文切换、删除确认等</div>
-        </div>
-      </div>
-
-      <div class="stat-grid">
-        <div class="stat-item">
-          <div class="stat-value">100+</div>
-          <div class="stat-label">内置食物数据</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value">< 1s</div>
-          <div class="stat-label">打开速度</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value">0</div>
-          <div class="stat-label">广告数量</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value">0</div>
-          <div class="stat-label">注册步骤</div>
+        <div class="dev-card">
+          <div class="dev-card-num">5</div>
+          <div class="dev-card-title">持续迭代</div>
+          <div class="dev-card-desc">根据反馈改进</div>
         </div>
       </div>
     </div>
-
-    <div class="poster-footer">
-      <div class="footer-logo">
-        <div class="icon">C</div>
-        <span>Calmorie</span>
+    <div class="poster-right">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px;">
+        <div class="dev-card">
+          <div style="font-size: 1.5rem; font-weight: 800; color: #22c55e;">100+</div>
+          <div style="font-size: 0.75rem; color: #6b7280; margin-top: 4px;">食物数据</div>
+        </div>
+        <div class="dev-card">
+          <div style="font-size: 1.5rem; font-weight: 800; color: #22c55e;">< 1s</div>
+          <div style="font-size: 0.75rem; color: #6b7280; margin-top: 4px;">打开速度</div>
+        </div>
+        <div class="dev-card">
+          <div style="font-size: 1.5rem; font-weight: 800; color: #22c55e;">0</div>
+          <div style="font-size: 0.75rem; color: #6b7280; margin-top: 4px;">广告数量</div>
+        </div>
+        <div class="dev-card">
+          <div style="font-size: 1.5rem; font-weight: 800; color: #22c55e;">0</div>
+          <div style="font-size: 0.75rem; color: #6b7280; margin-top: 4px;">注册步骤</div>
+        </div>
       </div>
-      <span class="footer-tag">用心打磨</span>
     </div>
   </div>
 </body>
