@@ -1,18 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm create *)",
-      "Bash(dir *)",
-      "Bash(cp -r ../calorie-calculation-temp/* .)",
-      "Bash(cp -r ../calorie-calculation-temp/.* .)",
-      "Bash(rm -rf ../calorie-calculation-temp)",
       "Bash(npm install *)",
-      "Bash(npm run *)",
-      "Bash(cat C:\\\\\\\\Users\\\\\\\\WENHAI~1\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\claude\\\\\\\\E--calorie-calculation\\\\\\\\cc2adb4f-3526-4894-bba8-2eed98f250bb\\\\\\\\tasks\\\\\\\\bf7o6rojr.output)",
       "Bash(npx tsc *)",
-      "Bash(python -c \"import sys;sys.stdout.reconfigure\\(encoding='utf-8'\\);f=open\\('src/pages/HomePage.tsx','r',encoding='utf-8'\\);lines=f.readlines\\(\\);f.close\\(\\);line=lines[95];print\\(f'Line 96 chars: {[hex\\(ord\\(c\\)\\) for c in line]}'\\)\")",
-      "Bash(npx cap *)",
-      "Bash(npx serve *)"
+      "Bash(npm run *)",
+      "WebSearch",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:registry.npmjs.org)"
     ]
   }
 }

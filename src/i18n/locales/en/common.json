@@ -21,6 +21,7 @@
   "calendar": "Calendar",
   "trends": "Trends",
   "ai": "AI",
+  "plan": "Plan",
   "confirmDelete": "Confirm Delete",
   "deleteRecordHint": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
   "cancel": "Cancel",

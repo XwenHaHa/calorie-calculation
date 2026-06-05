@@ -22,5 +22,15 @@
   "minutes": "min",
   "confirmAdd": "Confirm",
   "totalCalories": "Total: {{calories}} kcal",
-  "back": "Back"
+  "back": "Back",
+  "takePhoto": "Scan Food",
+  "chooseFromAlbum": "Choose from Album",
+  "recognizing": "Recognizing food...",
+  "recognitionFailed": "Recognition failed, please retry",
+  "recognitionResult": "Recognition Result",
+  "noFoodDetected": "No food detected",
+  "adjustGrams": "Adjust grams",
+  "confirmAddFood": "Confirm Add",
+  "photoSource": "Choose Image Source",
+  "perItem": "per serving"
 }

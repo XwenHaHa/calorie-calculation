@@ -3,6 +3,7 @@ import { zhCN, enUS } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import type { TFunction } from 'i18next';
 import { QUICK_FOOD_ITEMS, EXERCISE_TYPES, FOOD_DATABASE, EXERCISE_DATABASE } from '../constants';
+import type { UserProfile } from '../types';
 
 const FOOD_EMOJI_MAP: Record<string, string> = {
   '米饭': '🍚', '饭': '🍚', '炒饭': '🍚',
@@ -227,3 +228,23 @@ export function searchExercises(query: string) {
 }
 
 export { TITLE_TO_KEY };
+
+export function calculateBMR(profile: UserProfile): number {
+  const base = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age;
+  return Math.round(profile.gender === 'male' ? base + 5 : base - 161);
+}
+
+const ACTIVITY_MULTIPLIERS: Record<UserProfile['activityLevel'], number> = {
+  sedentary: 1.2,
+  light: 1.375,
+  moderate: 1.55,
+  active: 1.725,
+};
+
+export function calculateTDEE(bmr: number, activityLevel: UserProfile['activityLevel']): number {
+  return Math.round(bmr * ACTIVITY_MULTIPLIERS[activityLevel]);
+}
+
+export function calculateDailyCalorieTarget(tdee: number, deficit = 500): number {
+  return Math.max(1200, tdee - deficit);
+}

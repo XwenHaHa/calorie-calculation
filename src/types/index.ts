@@ -45,3 +45,50 @@ export interface AIHistoryEntry {
     recordCount: number;
   };
 }
+
+export interface UserProfile {
+  weight: number;
+  height: number;
+  age: number;
+  gender: 'male' | 'female';
+  targetWeight?: number;
+  activityLevel: 'sedentary' | 'light' | 'moderate' | 'active';
+}
+
+export interface FatLossPlan {
+  id: string;
+  createdAt: string;
+  profile: UserProfile;
+  bmr: number;
+  tdee: number;
+  dailyCalorieTarget: number;
+  weeklyPlan: DayPlan[];
+  tips: string[];
+}
+
+export interface DayPlan {
+  day: string;
+  meals: MealPlan[];
+  exercise: ExercisePlan | null;
+  totalCalories: number;
+}
+
+export interface MealPlan {
+  type: 'breakfast' | 'lunch' | 'dinner' | 'snack';
+  suggestion: string;
+  calories: number;
+}
+
+export interface ExercisePlan {
+  suggestion: string;
+  duration: number;
+  burnCalories: number;
+}
+
+export type ModelPreference = 'online' | 'local' | 'auto';
+
+export interface AIResult<T> {
+  data: T;
+  source: 'online' | 'local';
+  onlineFailed?: boolean;
+}

@@ -25,24 +25,28 @@ export function AIPage() {
     setHistory(getAIHistory());
   }, []);
 
+  const [onlineFailed, setOnlineFailed] = useState(false);
+
   const handleGenerate = useCallback(async () => {
     setLoading(true);
+    setOnlineFailed(false);
     try {
       const result = await generateAIAdvice(
         state.records,
         state.dailySummary,
         state.monthlyStats
       );
-      setAdvice(result);
+      setAdvice(result.data);
       setAdviceDate(state.selectedDate);
       setGenerated(true);
+      setOnlineFailed(!!result.onlineFailed);
 
       // Save to history
       const entry: AIHistoryEntry = {
         id: generateId(),
         createdAt: new Date().toISOString(),
         analyzedDate: state.dailySummary.date,
-        advice: result,
+        advice: result.data,
         dailySummary: {
           totalIntake: state.dailySummary.totalIntake,
           totalBurn: state.dailySummary.totalBurn,
@@ -90,6 +94,13 @@ export function AIPage() {
       >
         {loading ? t('analyzing') : generated ? t('regenerate') : t('generate')}
       </button>
+
+      {onlineFailed && (
+        <div className="mt-3 px-4 py-2.5 bg-orange-50 rounded-2xl flex items-center gap-2">
+          <span className="text-sm">⚠️</span>
+          <p className="text-xs text-orange-600">{t('onlineFailedHint', { ns: 'plan' })}</p>
+        </div>
+      )}
 
       {loading && (
         <div className="glass rounded-[38px] p-8 mt-6 flex flex-col items-center justify-center">

@@ -22,5 +22,15 @@
   "minutes": "分钟",
   "confirmAdd": "确认添加",
   "totalCalories": "共 {{calories}} 千卡",
-  "back": "返回"
+  "back": "返回",
+  "takePhoto": "拍照识别",
+  "chooseFromAlbum": "从相册选择",
+  "recognizing": "正在识别食物...",
+  "recognitionFailed": "识别失败，请重试",
+  "recognitionResult": "识别结果",
+  "noFoodDetected": "未识别到食物",
+  "adjustGrams": "调整克数",
+  "confirmAddFood": "确认添加",
+  "photoSource": "选择图片来源",
+  "perItem": "每份"
 }
