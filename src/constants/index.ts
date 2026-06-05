@@ -2,6 +2,9 @@ export const STORAGE_KEYS = {
   RECORDS: 'calmorie_records',
   SETTINGS: 'calmorie_settings',
   AI_HISTORY: 'calmorie_ai_history',
+  USER_PROFILE: 'calmorie_user_profile',
+  ONBOARDING_DONE: 'calmorie_onboarding_done',
+  FAT_LOSS_PLAN: 'calmorie_fat_loss_plan',
 } as const;
 
 export const EXERCISE_TYPES = [

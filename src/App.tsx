@@ -1,12 +1,30 @@
-﻿import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+﻿import { useState, useEffect } from 'react';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './store';
 import { BottomNav } from './components/BottomNav';
 import { HomePage } from './pages/HomePage';
 import { CalendarPage } from './pages/CalendarPage';
 import { StatsPage } from './pages/StatsPage';
 import { AIPage } from './pages/AIPage';
+import { PlanPage } from './pages/PlanPage';
+import { OnboardingPage } from './pages/OnboardingPage';
+import { hasCompletedOnboarding } from './services/storage';
 
 function App() {
+  const [onboardingDone, setOnboardingDone] = useState(hasCompletedOnboarding());
+
+  useEffect(() => {
+    setOnboardingDone(hasCompletedOnboarding());
+  }, []);
+
+  if (!onboardingDone) {
+    return (
+      <AppProvider>
+        <OnboardingPage onComplete={() => setOnboardingDone(true)} />
+      </AppProvider>
+    );
+  }
+
   return (
     <AppProvider>
       <Router>
@@ -19,6 +37,7 @@ function App() {
               <Route path="/calendar" element={<CalendarPage />} />
               <Route path="/stats" element={<StatsPage />} />
               <Route path="/ai" element={<AIPage />} />
+              <Route path="/plan" element={<PlanPage />} />
             </Routes>
             <BottomNav />
           </div>

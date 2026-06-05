@@ -21,6 +21,7 @@
   "calendar": "日历",
   "trends": "趋势",
   "ai": "AI",
+  "plan": "计划",
   "confirmDelete": "确认删除",
   "deleteRecordHint": "确定要删除「{{name}}」吗？此操作不可撤销。",
   "cancel": "取消",

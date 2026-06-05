@@ -11,6 +11,7 @@ import zhAdd from './locales/zh/add.json';
 import zhFood from './locales/zh/food.json';
 import zhExercise from './locales/zh/exercise.json';
 import zhPrompts from './locales/zh/prompts.json';
+import zhPlan from './locales/zh/plan.json';
 
 import enCommon from './locales/en/common.json';
 import enHome from './locales/en/home.json';
@@ -21,6 +22,7 @@ import enAdd from './locales/en/add.json';
 import enFood from './locales/en/food.json';
 import enExercise from './locales/en/exercise.json';
 import enPrompts from './locales/en/prompts.json';
+import enPlan from './locales/en/plan.json';
 
 i18n
   .use(LanguageDetector)
@@ -37,6 +39,7 @@ i18n
         food: zhFood,
         exercise: zhExercise,
         prompts: zhPrompts,
+        plan: zhPlan,
       },
       en: {
         common: enCommon,
@@ -48,6 +51,7 @@ i18n
         food: enFood,
         exercise: enExercise,
         prompts: enPrompts,
+        plan: enPlan,
       },
     },
     fallbackLng: 'zh',

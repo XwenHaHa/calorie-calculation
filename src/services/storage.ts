@@ -1,4 +1,4 @@
-import type { Transaction, DailySummary, MonthlyStats, AIHistoryEntry } from '../types';
+import type { Transaction, DailySummary, MonthlyStats, AIHistoryEntry, UserProfile, FatLossPlan } from '../types';
 import { STORAGE_KEYS } from '../constants';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, parseISO } from 'date-fns';
 
@@ -101,4 +101,30 @@ export const addAIHistory = (entry: AIHistoryEntry): void => {
 
 export const clearAIHistory = (): void => {
   localStorage.removeItem(STORAGE_KEYS.AI_HISTORY);
+};
+
+export const getUserProfile = (): UserProfile | null => {
+  const data = localStorage.getItem(STORAGE_KEYS.USER_PROFILE);
+  return data ? JSON.parse(data) : null;
+};
+
+export const saveUserProfile = (profile: UserProfile): void => {
+  localStorage.setItem(STORAGE_KEYS.USER_PROFILE, JSON.stringify(profile));
+};
+
+export const hasCompletedOnboarding = (): boolean => {
+  return localStorage.getItem(STORAGE_KEYS.ONBOARDING_DONE) === 'true';
+};
+
+export const completeOnboarding = (): void => {
+  localStorage.setItem(STORAGE_KEYS.ONBOARDING_DONE, 'true');
+};
+
+export const getFatLossPlan = (): FatLossPlan | null => {
+  const data = localStorage.getItem(STORAGE_KEYS.FAT_LOSS_PLAN);
+  return data ? JSON.parse(data) : null;
+};
+
+export const saveFatLossPlan = (plan: FatLossPlan): void => {
+  localStorage.setItem(STORAGE_KEYS.FAT_LOSS_PLAN, JSON.stringify(plan));
 };
